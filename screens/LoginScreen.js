@@ -3,6 +3,7 @@ import React from 'react'
 import useAuth from '../hooks/useAuth';
 
 const LoginScreen = () => {
+  
   const { user } = useAuth();
 
   console.log(user);
@@ -13,4 +14,4 @@ const LoginScreen = () => {
   )
 }
 
-export default LoginScreen
+export default LoginScreen;

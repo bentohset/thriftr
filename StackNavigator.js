@@ -9,6 +9,7 @@ const Stack = createNativeStackNavigator();
 
 const StackNavigator = () =>{
   const user = true;
+  
     return(
         <Stack.Navigator>
           {user ? (
@@ -21,6 +22,7 @@ const StackNavigator = () =>{
           )}
         </Stack.Navigator>
     )
+    
 }
 
 export default StackNavigator
