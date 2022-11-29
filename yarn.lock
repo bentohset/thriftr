@@ -1174,6 +1174,32 @@
     xcode "^3.0.1"
     xml2js "0.4.23"
 
+"@expo/config-plugins@^4.0.2":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-4.1.5.tgz#9d357d2cda9c095e511b51583ede8a3b76174068"
+  integrity sha512-RVvU40RtZt12HavuDAe+LDIq9lHj7sheOfMEHdmpJ/uTA8pgvkbc56XF6JHQD+yRr6+uhhb+JnAasGq49dsQbw==
+  dependencies:
+    "@expo/config-types" "^45.0.0"
+    "@expo/json-file" "8.2.36"
+    "@expo/plist" "0.0.18"
+    "@expo/sdk-runtime-versions" "^1.0.0"
+    "@react-native/normalize-color" "^2.0.0"
+    chalk "^4.1.2"
+    debug "^4.3.1"
+    find-up "~5.0.0"
+    getenv "^1.0.0"
+    glob "7.1.6"
+    resolve-from "^5.0.0"
+    semver "^7.3.5"
+    slash "^3.0.0"
+    xcode "^3.0.1"
+    xml2js "0.4.23"
+
+"@expo/config-types@^45.0.0":
+  version "45.0.0"
+  resolved "https://registry.yarnpkg.com/@expo/config-types/-/config-types-45.0.0.tgz#963c2fdce8fbcbd003758b92ed8a25375f437ef6"
+  integrity sha512-/QGhhLWyaGautgEyU50UJr5YqKJix5t77ePTwreOVAhmZH+ff3nrrtYTTnccx+qF08ZNQmfAyYMCD3rQfzpiJA==
+
 "@expo/config-types@^47.0.0":
   version "47.0.0"
   resolved "https://registry.yarnpkg.com/@expo/config-types/-/config-types-47.0.0.tgz#99eeabe0bba7a776e0f252b78beb0c574692c38d"
@@ -3100,6 +3126,15 @@ expand-brackets@^2.1.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
+expo-app-auth@~11.0.3:
+  version "11.0.3"
+  resolved "https://registry.yarnpkg.com/expo-app-auth/-/expo-app-auth-11.0.3.tgz#ab317ba2730379cdc616c6bda8e3ee0458f4b692"
+  integrity sha512-vw6rWfrVAKFaDB/VShEZYH/Vsd2dYp5BS4Vuq3UARDlrCNwNumO8AualmffTc42k13RTBlKhGoaxUaol/UiTUA==
+  dependencies:
+    "@expo/config-plugins" "^4.0.2"
+    expo-modules-core "~0.4.4"
+    invariant "^2.2.4"
+
 expo-application@~5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/expo-application/-/expo-application-5.0.1.tgz#628aeee74697d7aa39d0c0173dbf9383e06e53e9"
@@ -3145,6 +3180,13 @@ expo-font@~11.0.1:
   dependencies:
     fontfaceobserver "^2.1.0"
 
+expo-google-app-auth@~9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/expo-google-app-auth/-/expo-google-app-auth-9.0.0.tgz#c8ee144132d0f8f0db940c576f2d386bbe32069c"
+  integrity sha512-UzL1N8dd2Cm84FkgWCbkkYJv79ptFLescGaOpoJRXlnXVEkmz/iQ7zETmwOsIcq5ISAPXvgrSMb1LniqjgmnGQ==
+  dependencies:
+    expo-app-auth "~11.0.3"
+
 expo-keep-awake@~11.0.1:
   version "11.0.1"
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-11.0.1.tgz#ee354465892a94040ffe09901b85b469e7d54fb3"
@@ -3165,6 +3207,14 @@ expo-modules-core@1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-1.0.3.tgz#3d94da3524e7e7d81ae1e7e632a5e0e24db0f3f1"
   integrity sha512-XqyA5c+zsK+cHDNVBVYu62HLBHyGMG0iWpXVP0bBQJWz0eyg5rcuEqLsnRTmoEz0YnH6QBf/cwRl+FfgnnH5Og==
+  dependencies:
+    compare-versions "^3.4.0"
+    invariant "^2.2.4"
+
+expo-modules-core@~0.4.4:
+  version "0.4.10"
+  resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-0.4.10.tgz#6c7e7e211b3056fc23a462e9faea88cc7653fe9b"
+  integrity sha512-uCZA3QzF0syRaHwYY99iaNhnye4vSQGsJ/y6IAiesXdbeVahWibX4G1KoKNPUyNsKXIM4tqA+4yByUSvJe4AAw==
   dependencies:
     compare-versions "^3.4.0"
     invariant "^2.2.4"

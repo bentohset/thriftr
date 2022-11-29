@@ -8,11 +8,17 @@ import ProfileScreen from './screens/ProfileScreen';
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () =>{
+  const user = true;
     return(
         <Stack.Navigator>
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Profile" component={ProfileScreen} />
+          {user ? (
+            <>
+              <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen name="Profile" component={ProfileScreen} />
+            </>
+          ) : (
+            <Stack.Screen name="Login" component={LoginScreen} />
+          )}
         </Stack.Navigator>
     )
 }
