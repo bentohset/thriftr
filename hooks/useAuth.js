@@ -3,16 +3,22 @@ Authentication provider file
 holds the profiles that can be logged in, lets stack navigator know what pages are accessable
 */
 import React , {createContext, useContext} from 'react';
+//import * as Google from "expo-google-app-auth";
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({children}) => {
+
+  //connect to google login
+  const signInWithGoogle = async() => {
+    await signInWithGoogle.logInAsync()
+  }
   
   return (
     <AuthContext.Provider 
     
       value={{
-        user: "hello",
+        user: null,
       }}
     >
        {children}
