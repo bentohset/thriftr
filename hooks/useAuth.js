@@ -1,4 +1,7 @@
-import { View, Text } from 'react-native'
+/*
+Authentication provider file
+holds the profiles that can be logged in, lets stack navigator know what pages are accessable
+*/
 import React , {createContext, useContext} from 'react';
 
 const AuthContext = createContext({});
@@ -9,7 +12,7 @@ export const AuthProvider = ({children}) => {
     <AuthContext.Provider 
     
       value={{
-        user: "cleon",
+        user: "hello",
       }}
     >
        {children}
@@ -19,6 +22,8 @@ export const AuthProvider = ({children}) => {
   
 }
 
-export default function useAuth() {
+//allow other pages to import this function so that can use the information of users 
+//eg. "const { user } = useAuth();" gets value of user
+export default function useAuth() { 
   return useContext(AuthContext);
 }
