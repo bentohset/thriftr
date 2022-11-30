@@ -19,7 +19,6 @@ const LoginScreen = () => {
       <Button title='login with google' onPress={signInWithGoogle}/>   
     </View>
   )
-  //ERROR when press login with google: possible unhandled promise rejection
 }
 
 export default LoginScreen;
