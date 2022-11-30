@@ -1,9 +1,10 @@
 /*
 Authentication provider file
 holds the profiles that can be logged in, lets stack navigator know what pages are accessable
+
+TODO: find alternative to deprecated google sign in
 */
 import React , {createContext, useContext, useEffect, useState} from 'react';
-import * as Google from "expo-google-app-auth";
 import {
   GoogleAuthProvider,
   onAuthStateChanged,
@@ -15,7 +16,7 @@ import { auth } from "../firebase";
 const AuthContext = createContext({});
 
 const config = {    //sign in configurations
-  androidClientId:'281048744585-u927f736b5ho76eri7tt96peg9ok03et.apps.googleusercontent.com', //android taken from google-services.json
+  androidClientId:'281048744585-b7120nj53i0uoka56de6nmj7n6luskpg.apps.googleusercontent.com', //android taken from google-services.json
   iosClientId: '281048744585-ribaqd26962n5qnmks8jga1fk198qqeu.apps.googleusercontent.com', //ios taken from google-services-info.plist
   scopes: ["profile","email"],
   permissions: ["public_profile","email","gender","location"],
@@ -37,10 +38,9 @@ export const AuthProvider = ({children}) => {
     })
   },[]);
 
-  //connect to google login
+  //connect to google login ERROR: logInAsync deprecated
   const signInWithGoogle = async() => {
-    
-    await signInWithGoogle.logInAsync(config).then(async(logInResult)=>{
+    await Google.logInAsync(config).then(async(logInResult)=>{
       if (logInResult.type == 'success'){
         //login ... (implement later)
         //links to firebase database to deconstruct credentials/info
@@ -56,7 +56,6 @@ export const AuthProvider = ({children}) => {
   
   return (
     <AuthContext.Provider 
-    S
       value={{
         user: user,  
         signInWithGoogle,      //added google sign in option
