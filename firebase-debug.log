@@ -1,0 +1,20 @@
+[debug] [2022-11-30T09:01:56.257Z] ----------------------------------------------------------------------
+[debug] [2022-11-30T09:01:56.260Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\benja\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js projects:list
+[debug] [2022-11-30T09:01:56.261Z] CLI Version:   11.16.1
+[debug] [2022-11-30T09:01:56.261Z] Platform:      win32
+[debug] [2022-11-30T09:01:56.262Z] Node Version:  v18.12.1
+[debug] [2022-11-30T09:01:56.263Z] Time:          Wed Nov 30 2022 17:01:56 GMT+0800 (Singapore Standard Time)
+[debug] [2022-11-30T09:01:56.263Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-11-30T09:01:56.278Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-11-30T09:01:56.279Z] > authorizing via signed-in user (toh.benjamin123@gmail.com)
+[debug] [2022-11-30T09:01:56.291Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=1000
+[debug] [2022-11-30T09:01:56.712Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 401
+[debug] [2022-11-30T09:01:56.713Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
+[debug] [2022-11-30T09:01:56.716Z] HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.
+[debug] [2022-11-30T09:01:56.783Z] FirebaseError: HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.
+    at responseToError (C:\Users\benja\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:49:12)
+    at RetryOperation._fn (C:\Users\benja\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:288:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[error] 
+[error] Error: Failed to list Firebase projects. See firebase-debug.log for more info.
