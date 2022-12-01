@@ -8,6 +8,8 @@ import React , {createContext, useContext, useEffect, useState} from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import * as AuthSession from 'expo-auth-session';
+import { auth } from "../firebase";
+import Constants from 'expo-constants';
 import {
   GoogleAuthProvider,
   onAuthStateChanged,
@@ -15,26 +17,29 @@ import {
   getAuth,
   signOut,
 } from "firebase/auth";
-import { auth } from "../firebase";
+
+import { Platform } from 'react-native';
+export const isAndroid = () => Platform.OS === 'android';
 
 WebBrowser.maybeCompleteAuthSession();
 
 const AuthContext = createContext({});
 
 const config = {    //sign in configurations
-  androidClientId:'281048744585-b7120nj53i0uoka56de6nmj7n6luskpg.apps.googleusercontent.com', //android taken from google-services.json
-  iosClientId: '281048744585-ribaqd26962n5qnmks8jga1fk198qqeu.apps.googleusercontent.com', //ios taken from google-services-info.plist
+  //clientId: isAndroid() ? '281048744585-b7120nj53i0uoka56de6nmj7n6luskpg.apps.googleusercontent.com' : '281048744585-ribaqd26962n5qnmks8jga1fk198qqeu.apps.googleusercontent.com',
+  //androidClientId:'281048744585-b7120nj53i0uoka56de6nmj7n6luskpg.apps.googleusercontent.com', //android taken from google-services.json
+  //iosClientId: '281048744585-ribaqd26962n5qnmks8jga1fk198qqeu.apps.googleusercontent.com', //ios taken from google-services-info.plist
   expoClientId: '281048744585-bgk849tl2ob1db0ptvvtlslsa5faqm3n.apps.googleusercontent.com',
-  webClientId: '281048744585-u927f736b5ho76eri7tt96peg9ok03et.apps.googleusercontent.com',
-  scopes: ["profile","email"],
-  permissions: ["public_profile","email","gender","location"],
-  redirectUri: AuthSession.makeRedirectUri({ native: 'com.googleusercontent.apps.MYID://redirect',useProxy: true })
+  //webClientId: '281048744585-u927f736b5ho76eri7tt96peg9ok03et.apps.googleusercontent.com',
+  //scopes: ["profile","email"],
+  //permissions: ["public_profile","email","gender","location"],
+  redirectUri: AuthSession.makeRedirectUri({ native: 'com.googleusercontent.apps.app1://redirect',useProxy: true })
 }
 
 export const AuthProvider = ({children}) => {
   const [error,setError] = useState(null);
   const [user, setUser] = useState(null);
-  const [request, response, promptAsync] = Google.useIdTokenAuthRequest(config);
+  const [request, response, promptAsync] = Google.useIdTokenAuthRequest(config,{useProxy: true});
 
   
 
@@ -42,6 +47,7 @@ export const AuthProvider = ({children}) => {
     await promptAsync().then(async (response) => {
       if (response.type === "success"){
         const {idToken, accessToken} = response;
+        console.log("idtoken and accestoken: "+idToken+" " + accessToken);
         const credential = GoogleAuthProvider.credential(idToken, accessToken);
         // const credential = GoogleAuthProvider.credential(
         //   null,
@@ -72,7 +78,7 @@ export const AuthProvider = ({children}) => {
         setUser(null);
       }
       //debug user
-      console.log(user);
+      console.log("user is: "+ user);
     })
   },[]);
   
