@@ -9,6 +9,9 @@ import React from 'react';
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import ProfileScreen from './screens/ProfileScreen';
+import ForgetPasswordScreen from './screens/ForgetPasswordScreen';
+import RegistrationScreen from './screens/RegistrationScreen';
+import SettingsScreen from './screens/SettingsScreen';
 import useAuth from "./hooks/useAuth"
 
 const Stack = createNativeStackNavigator();
@@ -22,10 +25,15 @@ const StackNavigator = () =>{
             <>
               <Stack.Screen name="Home" component={HomeScreen} />
               <Stack.Screen name="Profile" component={ProfileScreen} />
+              <Stack.Screen name = "Settings" component = {SettingsScreen} />
             </>
           ) : (
+            <>
             <Stack.Screen name="Login" component={LoginScreen} />
-          )}
+            <Stack.Screen name="Registration" component = {RegistrationScreen} />
+            <Stack.Screen name = "ForgetPassword" component = {ForgetPasswordScreen}/>
+            </>
+            )}
         </Stack.Navigator>
     )
     

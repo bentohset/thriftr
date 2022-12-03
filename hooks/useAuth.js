@@ -8,7 +8,7 @@ import React , {createContext, useContext, useEffect, useState} from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import * as AuthSession from 'expo-auth-session';
-import { auth } from "../firebase";
+import { auth, firebase } from "../firebase";
 import Constants from 'expo-constants';
 import {
   GoogleAuthProvider,
@@ -40,10 +40,48 @@ export const AuthProvider = ({children}) => {
   const [error,setError] = useState(null);
   const [user, setUser] = useState(null);
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest(config,{useProxy: true});
+  const [loadingInitial, setLoadingInitial] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  
+  useEffect(
+    () =>
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          //if user is logged in
+          setUser(user);
+        }
+        else{
+          //not logged in
+          setUser(null);
+        }
+        //debug user
+      
+        console.log("user is: "+ user);
+        setLoadingInitial(false);
+      }),
+    []
+  );
+
+  const logout = () => {
+    setLoadingInitial(false);
+
+    signOut(auth)
+      .catch(error => setError(error))
+      .finally(() => setLoading(false));
+  }
+
+  const registerWithEmail = async (email, password, firstName, lastName) => {
+    return firebase
+    .auth()
+    .signInWithEmailandPassword(email, password)
+    .then((response)=>{
+      setUser(response.user);
+      return response.user;
+    });
+  };
 
   const signInWithGoogle = async() =>{
+    setLoading(true);
     await promptAsync().then(async (response) => {
       if (response.type === "success"){
         const {idToken, accessToken} = response;
@@ -56,7 +94,9 @@ export const AuthProvider = ({children}) => {
         await signInWithCredential(auth, credential);
       }
       return Promise.reject();
-    }).catch(error => setError(error));
+    }).catch(error => setError(error))
+    .finally(()=> setLoading(false));
+
     // await Google.useAuthRequest(config). then(async(logInResult)=>{
     //   if (logInResult.type === "success"){
     //     const { idToken, accessToken } = logInResult;
@@ -67,20 +107,8 @@ export const AuthProvider = ({children}) => {
     //   return Promise.reject();
     // })
   };
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        //if user is logged in
-        setUser(user);
-      }
-      else{
-        //not logged in
-        setUser(null);
-      }
-      //debug user
-      console.log("user is: "+ user);
-    })
-  },[]);
+
+  
   
   //Expo google login gets the credentials then firebase checks the crednetials and logs you in.
   // useEffect(() => {
@@ -96,11 +124,15 @@ export const AuthProvider = ({children}) => {
   return (
     <AuthContext.Provider 
       value={{
-        user:user,  
+        user,
+        loading,
+        error,
         signInWithGoogle,      //added google sign in option
+        registerWithEmail,
+        logout,
       }}
     >
-       {children}
+      {!loadingInitial && children}
     </AuthContext.Provider>
   )
 
