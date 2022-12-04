@@ -81,8 +81,12 @@ export const AuthProvider = ({children}) => {
     setDisplayName(displayName);
     setEmail(email);
     setPassword(password);
-    return createUserWithEmailAndPassword(auth, email, password,displayName);
-  }
+    setLoading(true);
+
+    await createUserWithEmailAndPassword(auth, email, password)
+    .catch((error)=> setError(error))
+    .finally(()=>setLoading(false));
+  } 
 
   const signInWithGoogle = async() =>{
     setLoading(true);
