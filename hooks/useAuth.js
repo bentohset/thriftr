@@ -4,7 +4,7 @@ holds the profiles that can be logged in, lets stack navigator know what pages a
 
 TODO: find alternative to deprecated google sign in
 */
-import React , {createContext, useContext, useEffect, useState} from 'react';
+import React , {createContext, useContext, useEffect, useState, useMemo} from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import * as AuthSession from 'expo-auth-session';
@@ -39,11 +39,13 @@ const config = {    //sign in configurations
 }
 
 export const AuthProvider = ({children}) => {
-  const [error,setError] = useState(null);
   const [user, setUser] = useState(null);
+
+  const [error,setError] = useState(null);
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest(config,{useProxy: true});
   const [loadingInitial, setLoadingInitial] = useState(true);
   const [loading, setLoading] = useState(false);
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [displayName, setDisplayName] = useState('')
@@ -69,7 +71,7 @@ export const AuthProvider = ({children}) => {
   );
 
   const logout = () => {
-    setLoadingInitial(false);
+    setLoading(true);
 
     signOut(auth)
       .catch(error => setError(error))
@@ -116,17 +118,24 @@ export const AuthProvider = ({children}) => {
     // })
   };
   
+  // memoization optimisation
+  // caches value so no need for recalculation
+  // only runs again when variables update
+  // https://www.w3schools.com/react/react_usememo.asp
+  const memoedValue = useMemo(
+    ()=>({
+      user,
+      loading,
+      error,
+      //signInWithGoogle,      //added google sign in option
+      registerUser,
+      logout,
+    }),
+    [user, loading, error]
+  );
+
   return (
-    <AuthContext.Provider 
-      value={{
-        user,
-        loading,
-        error,
-        //signInWithGoogle,      //added google sign in option
-        registerUser,
-        logout,
-      }}
-    >
+    <AuthContext.Provider value={memoedValue}>
       {!loadingInitial && children}
     </AuthContext.Provider>
   )
