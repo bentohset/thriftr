@@ -8,7 +8,8 @@ import React , {createContext, useContext, useEffect, useState} from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import * as AuthSession from 'expo-auth-session';
-import { auth, firebase } from "../firebase";
+import { auth, firebase, db } from "../firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import Constants from 'expo-constants';
 import {
   GoogleAuthProvider,
@@ -19,6 +20,7 @@ import {
 } from "firebase/auth";
 
 import { Platform } from 'react-native';
+import { addDoc } from 'firebase/firestore';
 export const isAndroid = () => Platform.OS === 'android';
 
 WebBrowser.maybeCompleteAuthSession();
@@ -26,13 +28,13 @@ WebBrowser.maybeCompleteAuthSession();
 const AuthContext = createContext({});
 
 const config = {    //sign in configurations
-  //clientId: isAndroid() ? '281048744585-b7120nj53i0uoka56de6nmj7n6luskpg.apps.googleusercontent.com' : '281048744585-ribaqd26962n5qnmks8jga1fk198qqeu.apps.googleusercontent.com',
-  //androidClientId:'281048744585-bgk849tl2ob1db0ptvvtlslsa5faqm3n.apps.googleusercontent.com', //android taken from google-services.json
-  //iosClientId: '281048744585-ribaqd26962n5qnmks8jga1fk198qqeu.apps.googleusercontent.com', //ios taken from google-services-info.plist
+  clientId: isAndroid() ? '281048744585-b7120nj53i0uoka56de6nmj7n6luskpg.apps.googleusercontent.com' : '281048744585-ribaqd26962n5qnmks8jga1fk198qqeu.apps.googleusercontent.com',
+  androidClientId:'281048744585-bgk849tl2ob1db0ptvvtlslsa5faqm3n.apps.googleusercontent.com', //android taken from google-services.json
+  iosClientId: '281048744585-ribaqd26962n5qnmks8jga1fk198qqeu.apps.googleusercontent.com', //ios taken from google-services-info.plist
   expoClientId: '281048744585-bgk849tl2ob1db0ptvvtlslsa5faqm3n.apps.googleusercontent.com',
-  //webClientId: '281048744585-u927f736b5ho76eri7tt96peg9ok03et.apps.googleusercontent.com',
-  //scopes: ["profile","email"],
-  //permissions: ["public_profile","email","gender","location"],
+  webClientId: '281048744585-u927f736b5ho76eri7tt96peg9ok03et.apps.googleusercontent.com',
+  scopes: ["profile","email"],
+  permissions: ["public_profile","email","gender","location"],
   redirectUri: AuthSession.makeRedirectUri({ native: 'com.googleusercontent.apps.thriftr://redirect',useProxy: true })
 }
 
@@ -42,6 +44,10 @@ export const AuthProvider = ({children}) => {
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest(config,{useProxy: true});
   const [loadingInitial, setLoadingInitial] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [displayName, setDisplayName] = useState('')
+  
 
   useEffect(
     () =>
@@ -70,15 +76,13 @@ export const AuthProvider = ({children}) => {
       .finally(() => setLoading(false));
   }
 
-  const registerWithEmail = async (email, password, firstName, lastName) => {
-    return firebase
-    .auth()
-    .signInWithEmailandPassword(email, password)
-    .then((response)=>{
-      setUser(response.user);
-      return response.user;
-    });
-  };
+
+  async function registerUser(email,password,displayName) {
+    setDisplayName(displayName);
+    setEmail(email);
+    setPassword(password);
+    return createUserWithEmailAndPassword(auth, email, password,displayName);
+  }
 
   const signInWithGoogle = async() =>{
     setLoading(true);
@@ -107,19 +111,6 @@ export const AuthProvider = ({children}) => {
     //   return Promise.reject();
     // })
   };
-
-  
-  
-  //Expo google login gets the credentials then firebase checks the crednetials and logs you in.
-  // useEffect(() => {
-  //   if (response?.type === 'success'){
-  //     async function signIn(){
-  //       const credential = GoogleAuthProvider.credential(null, response.authentication.accessToken);
-  //       await signInWithCredential(auth,credential);
-  //     }
-  //     signIn();
-  //   }
-  // }, [response]);
   
   return (
     <AuthContext.Provider 
@@ -127,8 +118,8 @@ export const AuthProvider = ({children}) => {
         user,
         loading,
         error,
-        signInWithGoogle,      //added google sign in option
-        registerWithEmail,
+        //signInWithGoogle,      //added google sign in option
+        registerUser,
         logout,
       }}
     >
