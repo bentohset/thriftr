@@ -20,7 +20,7 @@ import {
 } from "firebase/auth";
 
 import { Platform } from 'react-native';
-import { addDoc } from 'firebase/firestore';
+import { doc, setDoc, addDoc } from 'firebase/firestore';
 export const isAndroid = () => Platform.OS === 'android';
 
 WebBrowser.maybeCompleteAuthSession();
@@ -79,13 +79,21 @@ export const AuthProvider = ({children}) => {
   }
 
 
-  async function registerUser(email,password,displayName) {
+  function registerUser(email,password,displayName) {
     setDisplayName(displayName);
     setEmail(email);
     setPassword(password);
     setLoading(true);
+    
+    createUserWithEmailAndPassword(auth, email, password)
+    .then(()=> {
+      addDoc(collection(db,"users", user.uid),{
+        id: user.uid,
+        display: displayName,
+        email: email,
 
-    await createUserWithEmailAndPassword(auth, email, password)
+      })
+    })
     .catch((error)=> setError(error))
     .finally(()=>setLoading(false));
   } 

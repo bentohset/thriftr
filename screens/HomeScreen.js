@@ -25,7 +25,7 @@ const HomeScreen = () => {
     return (
         <View style={styles.container}>
             <Text className="text-red-400">
-                Hello, {user?.displayName}!
+                Hello, {user?.email}!
             </Text>
             <Button title="Sign out" style={styles.button} onPress={logout}/>
             <Button 
@@ -33,7 +33,7 @@ const HomeScreen = () => {
                 style={styles.button}
                 onPress={() => navigation.navigate('Settings')}/>
             <Button
-                title="Go toooo Profile helloworld"
+                title="Profile"
                 style={styles.button}
                 onPress={()=>navigation.navigate("Profile")}
             />
