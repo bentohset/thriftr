@@ -3,8 +3,10 @@ Register by email
 also offers continue with google
 */
 
-import { View, Text, TextInput, StyleSheet , Button} from "react-native";
-import React, {useState, useEffect} from "react";
+import { View, Text, TextInput, StyleSheet , Button, TouchableOpacity} from "react-native";
+import React, {useState, useEffect, useLayoutEffect} from "react";
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { useNavigation } from '@react-navigation/native';
 import { auth, firebase } from '../firebase'
 import '@firebase/firestore';
 import useAuth from "../hooks/useAuth";
@@ -16,7 +18,14 @@ const Registration = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const {registerUser, loading} = useAuth();
+    const navigation = useNavigation();
     
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerShown: false,
+        });
+    }, []);
+
     async function registration() {
         if (email === '' || password === '') {
             setError('Email and password are required');
@@ -67,45 +76,52 @@ const Registration = () => {
     // }
 
     return (
-        <View style={styles.container}>
-            <Text>
-                Create Account
+        <View className="flex-1 justify-center items-center">
+            <TouchableOpacity className="absolute left-10 top-20 bg-[#D9D9D9] p-4 rounded-xl" onPress={() => navigation.goBack()} >
+                <Text className="text-[#444]">Back</Text>
+            </TouchableOpacity>
+            <Text className="absolute font-bold text-5xl left-10 top-40 leading-loose">
+                Create {'\n'}Account
             </Text>
-            {!!error && <View style={styles.error}><Text>{error}</Text></View>}
-            <View style={styles.controls}>
-                <TextInput placeholder="Email" containerStyle={styles.control} value={email} onChangeText={(email) => setEmail(email)} autoCapitalize="none" autoCorrect={false} keyboardType="email-address"/>
-                <TextInput placeholder="password" containerStyle={styles.control} value={password} onChangeText={(password) => setPassword(password)} autoCapitalize="none" autoCorrect={false} secureTextEntry={true}/>
-                <Button title="Create account" buttonStyle={styles.control} onPress={registration}>
-                </Button>
-            </View>
+
+            {!!error && 
+                <View 
+                    className="absolute opacity-90 z-10 p-4 bg-[#D54826FF] rounded-2xl bottom-3/4"
+                >
+                    <Text className="text-white">
+                        {error}
+                    </Text>
+                </View>
+            }
+            
+            <Text className="right-1/3 font-semibold">Your Email</Text>
+            <TextInput 
+                className="bg-[#D9D9D9] w-5/6 h-12 m-4 p-4 rounded-xl"
+                placeholder="example@gmail.com"  
+                value={email} 
+                onChangeText={(email) => setEmail(email)} 
+                autoCapitalize="none" 
+                autoCorrect={false} 
+                keyboardType="email-address"
+            />
+            <Text className="right-1/3 font-semibold">Password</Text>
+            <TextInput 
+                className="bg-[#D9D9D9] w-5/6 h-12 m-4 p-4 rounded-xl"
+                placeholder="password" 
+                value={password} 
+                onChangeText={(password) => setPassword(password)} 
+                autoCapitalize="none" 
+                autoCorrect={false} 
+                secureTextEntry={true}
+            />
+            <TouchableOpacity
+                onPress={registration}
+                className="absolute bottom-24 bg-[#5b5b5b] w-5/6 p-4 rounded-2xl"
+            >
+                <Text className="text-white text-center font-semibold">Create account</Text>
+            </TouchableOpacity>
         </View>
     )
 }
-const styles = StyleSheet.create({
-    container: {
-        fontSize: 100,
-        flex: 1,
-        paddingTop: 20,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
-    
-      controls: {
-        flex: 1,
-        padding: 10,
-      },
-    
-      control: {
-        marginTop: 100,
-      },
-    
-      error: {
-        margin: 10,
-        padding: 10,
-        color: '#fff',
-        backgroundColor: '#D54826FF',
-        borderRadius: 10,
-      }
-});
+
 export default Registration
