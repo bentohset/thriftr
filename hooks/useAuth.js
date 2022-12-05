@@ -48,7 +48,6 @@ export const AuthProvider = ({children}) => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [displayName, setDisplayName] = useState('')
   
 
   useEffect(
@@ -79,19 +78,18 @@ export const AuthProvider = ({children}) => {
   }
 
 
-  function registerUser(email,password,displayName) {
-    setDisplayName(displayName);
+  async function registerUser(email,password) {
     setEmail(email);
     setPassword(password);
     setLoading(true);
     
-    createUserWithEmailAndPassword(auth, email, password)
-    .then(()=> {
-      addDoc(collection(db,"users", user.uid),{
+    await createUserWithEmailAndPassword(auth, email, password)
+    .then((credentials)=> {
+      const user = credentials.user;
+      db.collection("users").doc(user.uid)
+      .set({
         id: user.uid,
-        display: displayName,
         email: email,
-
       })
     })
     .catch((error)=> setError(error))

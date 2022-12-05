@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import firebase from 'firebase/app';
 import { getAuth,createUserWithEmailAndPassword } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+//import * as admin from "firebase-admin";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -15,6 +16,8 @@ const firebaseConfig = {
   messagingSenderId: "281048744585",
   appId: "1:281048744585:web:53c41a16ee2d8577697c58"
 };
+
+//require('dotenv').config
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
