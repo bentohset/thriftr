@@ -2,12 +2,13 @@
 The log in screen
 */
 
-import { View, Text , Button, StyleSheet, TextInput} from 'react-native'
+import { View, Text , Button, StyleSheet, TextInput, TouchableOpacity, SafeAreaView} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import React, {useState} from 'react'
+import React, {useState, useLayoutEffect} from 'react'
 import { auth, firebase } from "../firebase";
 import useAuth from '../hooks/useAuth';
 import { signInWithEmailAndPassword, getAuth} from 'firebase/auth';
+import { Icon } from "react-native-elements";
 
 
 const LoginScreen = () => {
@@ -32,43 +33,47 @@ const LoginScreen = () => {
 
 
   return (
-    <View style={styles.container}>
-      <Text>Login Screen</Text>
-      {!!error && <View style={styles.error}><Text>{error}</Text></View>}
-      <View style={styles.controls}>
-        <TextInput placeholder="Email" containerStyle={styles.control} value={email} onChangeText={(email) => setEmail(email)} autoCapitalize="none" autoCorrect={false} keyboardType="email-address"/>
-        <TextInput placeholder="Password" containerStyle={styles.control} value={password} onChangeText={(password) => setPassword(password)} autoCapitalize="none" autoCorrect={false} secureTextEntry={true}/>
-        <Button title="Sign in" buttonStyle={styles.control} onPress={logIn} />
-        <Button title='Register with Email'  buttonStyle={styles.control} onPress={() => navigation.navigate('Registration')}/>
-      </View>
-    </View>
+    <SafeAreaView className="flex-1 justify-center items-center">
+      <TouchableOpacity className="absolute left-10 top-20 bg-[#D9D9D9] p-3 rounded-xl mb-10" onPress={() => navigation.goBack()} >
+        <Icon name="chevron-left" color="#444"/>
+      </TouchableOpacity>
+      <Text className="absolute font-bold text-5xl left-10 top-40 leading-loose">
+        Welcome {'\n'}Back
+      </Text>
+
+      {!!error && <View
+        className="absolute opacity-90 z-10 p-4 bg-[#D54826FF] rounded-2xl bottom-3/4"
+      ><Text>{error}</Text></View>}
+
+      <Text className="right-1/3 font-semibold">Your Email</Text>
+      <TextInput
+        className="bg-[#D9D9D9] w-5/6 h-12 m-4 p-4 rounded-xl"
+        placeholder="example@mail.com" 
+        value={email} 
+        onChangeText={(email) => setEmail(email)} 
+        autoCapitalize="none" 
+        autoCorrect={false} 
+        keyboardType="email-address"
+      />
+
+      <Text className="right-1/3 font-semibold">Password</Text>
+      <TextInput 
+        className="bg-[#D9D9D9] w-5/6 h-12 m-4 p-4 rounded-xl"
+        placeholder="Password" 
+        value={password} 
+        onChangeText={(password) => setPassword(password)} 
+        autoCapitalize="none" 
+        autoCorrect={false} 
+        secureTextEntry={true}
+      />
+      <TouchableOpacity
+        onPress={logIn}
+        className="absolute bottom-24 bg-[#5b5b5b] w-5/6 p-4 rounded-2xl"
+      >
+        <Text className="text-white text-center font-semibold">Sign in</Text>
+      </TouchableOpacity>
+    </SafeAreaView>
   )
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 20,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  controls: {
-    flex: 1,
-  },
-
-  control: {
-    marginTop: 10,
-    padding: 10,
-  },
-
-  error: {
-    margin: 10,
-    padding: 10,
-    color: '#fff',
-    backgroundColor: '#D54826FF',
-    borderRadius: 10,
-  }
-});
 
 export default LoginScreen;

@@ -26,7 +26,11 @@ const StackNavigator = () =>{
     return(
       //TODO: only direct to configureprofile screen if user username and fullname is not configured
       //<Stack.Screen name="ConfigureProfile" component={ConfigureProfileScreen} />
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
           {user ? (
             <>
               <Stack.Screen name="Home" component={HomeScreen} />

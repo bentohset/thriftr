@@ -3,7 +3,7 @@ Register by email
 also offers continue with google
 */
 
-import { View, Text, TextInput, StyleSheet , Button, TouchableOpacity} from "react-native";
+import { View, Text, TextInput, StyleSheet , Button, TouchableOpacity, SafeAreaView} from "react-native";
 import React, {useState, useEffect, useLayoutEffect} from "react";
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import { useNavigation } from '@react-navigation/native';
@@ -11,6 +11,8 @@ import { auth, firebase } from '../firebase'
 import '@firebase/firestore';
 import useAuth from "../hooks/useAuth";
 import { doc, FieldValue } from "firebase/firestore";
+import { Icon } from "react-native-elements";
+import { useFonts } from 'expo-font';
 
 
 const Registration = () => {
@@ -19,12 +21,10 @@ const Registration = () => {
     const [password, setPassword] = useState('')
     const {registerUser, loading} = useAuth();
     const navigation = useNavigation();
-    
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            headerShown: false,
-        });
-    }, []);
+
+    const [fontsLoaded] = useFonts({
+        'Poppins': require('../assets/fonts/Poppins-Regular.ttf'),
+      });
 
     async function registration() {
         if (email === '' || password === '') {
@@ -76,9 +76,9 @@ const Registration = () => {
     // }
 
     return (
-        <View className="flex-1 justify-center items-center">
-            <TouchableOpacity className="absolute left-10 top-20 bg-[#D9D9D9] p-4 rounded-xl" onPress={() => navigation.goBack()} >
-                <Text className="text-[#444]">Back</Text>
+        <SafeAreaView className="flex-1 justify-center items-center" style={{fontFamily:'Poppins'}}>
+            <TouchableOpacity className="absolute left-10 top-20 bg-[#D9D9D9] p-3 rounded-xl" onPress={() => navigation.goBack()} >
+                <Icon name="chevron-left" color="#444"/>
             </TouchableOpacity>
             <Text className="absolute font-bold text-5xl left-10 top-40 leading-loose">
                 Create {'\n'}Account
@@ -120,7 +120,7 @@ const Registration = () => {
             >
                 <Text className="text-white text-center font-semibold">Create account</Text>
             </TouchableOpacity>
-        </View>
+        </SafeAreaView>
     )
 }
 
