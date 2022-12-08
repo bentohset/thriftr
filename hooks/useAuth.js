@@ -20,7 +20,7 @@ WebBrowser.maybeCompleteAuthSession();
 
 export const AuthProvider = ({children}) => {
 
-  const[error, setError]=useState(null);
+
 
   const[ accessToken, setAccessToken] = React.useState();
   const[ userinfo, setUserInfo] = React.useState();
@@ -29,7 +29,7 @@ export const AuthProvider = ({children}) => {
   });
 
 
-  const signInWithGoogle =  promptAsync();
+  const signInWithGoogle = async()=> promptAsync();
     React.useEffect(() => {
       if (response?.type === 'success') {
         const { id_token } = response.params;

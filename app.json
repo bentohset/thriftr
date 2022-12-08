@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "app1",
-    "slug": "app1",
+    "scheme":"host.exp.exponent",
+    "name": "Thriftr3",
+    "slug": "Thriftr3",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,16 +19,24 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "host.exp.exponent"
     },
     "android": {
+      "package": "host.exp.exponent",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       }
+ 
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "cd1d86f2-5fde-4774-a984-38a9af1d498c"
+      }
     }
   }
 }

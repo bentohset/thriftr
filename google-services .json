@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "200902666204",
+    "project_id": "thriftr4",
+    "storage_bucket": "thriftr4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:200902666204:android:8e89dd00b7eaaa6db7d119",
+        "android_client_info": {
+          "package_name": "host.exp.exponent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "200902666204-6edcotmoiprqtsqirki9cgs3a3thncfm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLN-FQURZGYBIlKTdEUj0fapfJOCvIwrc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "200902666204-6edcotmoiprqtsqirki9cgs3a3thncfm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "200902666204-s25frrkn690cok4nm60qvk81a2to32kk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "host.exp.exponent"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
