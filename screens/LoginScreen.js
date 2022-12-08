@@ -42,8 +42,12 @@ const LoginScreen = () => {
       </Text>
 
       {!!error && <View
-        className="absolute opacity-90 z-10 p-4 bg-[#D54826FF] rounded-2xl bottom-3/4"
-      ><Text>{error}</Text></View>}
+        className="absolute top-72 opacity-90 z-10 p-4 bg-[#D54826FF] rounded-2xl"
+      >
+        <Text className="text-white">
+          {error}
+        </Text>
+      </View>}
 
       <Text className="right-1/3 font-semibold">Your Email</Text>
       <TextInput
@@ -66,12 +70,21 @@ const LoginScreen = () => {
         autoCorrect={false} 
         secureTextEntry={true}
       />
-      <TouchableOpacity
-        onPress={logIn}
-        className="absolute bottom-24 bg-[#5b5b5b] w-5/6 p-4 rounded-2xl"
-      >
-        <Text className="text-white text-center font-semibold">Sign in</Text>
-      </TouchableOpacity>
+      <View className="flex flex-col w-full items-center gap-2 absolute bottom-10">
+        <TouchableOpacity
+          onPress={logIn}
+          className="bg-[#5b5b5b] w-5/6 p-4 rounded-2xl"
+        >
+          <Text className="text-white text-center font-semibold">Sign in</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          
+          className="flex flex-row items-center justify-center bg-transparent w-5/6 p-4 rounded-2xl border border-[#5B5B5B]"
+        >
+          <Icon className="p-0" size={16} type="antdesign" name="google"/>
+          <Text className="text-[#5B5B5B] text-center font-semibold">Continue with Google</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   )
 }

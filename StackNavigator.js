@@ -6,7 +6,6 @@ what is navigatable by profiles who are logged in/ not logged in
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import ProfileScreen from './screens/ProfileScreen';
@@ -16,6 +15,7 @@ import SettingsScreen from './screens/SettingsScreen';
 import useAuth from "./hooks/useAuth"
 import GetStartedScreen from './screens/GetStartedScreen';
 import ConfigureProfileScreen from './screens/ConfigureProfileScreen';
+import { View } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +26,7 @@ const StackNavigator = () =>{
     return(
       //TODO: only direct to configureprofile screen if user username and fullname is not configured
       //<Stack.Screen name="ConfigureProfile" component={ConfigureProfileScreen} />
+
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
@@ -46,6 +47,7 @@ const StackNavigator = () =>{
             </>
             )}
         </Stack.Navigator>
+
     )
     
 }

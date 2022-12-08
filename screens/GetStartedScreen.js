@@ -21,7 +21,7 @@ const GetStartedScreen = () => {
     
     return (
         <View className="flex-1 flex-col items-center justify-center">
-            <Text className="font-bold text-2xl text-[#444] p-2.5">Thriftr</Text>
+            <Text className="font-bold text-3xl text-[#444] p-2.5">Thriftr</Text>
             <Text className="p-2.5 text-[#6A6A6A] text-xl">Find your fit today</Text>
             <TouchableOpacity
                 onPress={()=>navigation.navigate('Registration')}

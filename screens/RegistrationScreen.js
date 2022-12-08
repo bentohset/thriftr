@@ -11,7 +11,7 @@ import { auth, firebase } from '../firebase'
 import '@firebase/firestore';
 import useAuth from "../hooks/useAuth";
 import { doc, FieldValue } from "firebase/firestore";
-import { Icon } from "react-native-elements";
+import { Icon } from '@rneui/themed';
 import { useFonts } from 'expo-font';
 
 
@@ -76,7 +76,7 @@ const Registration = () => {
     // }
 
     return (
-        <SafeAreaView className="flex-1 justify-center items-center" style={{fontFamily:'Poppins'}}>
+        <SafeAreaView className="flex-1 justify-center items-center">
             <TouchableOpacity className="absolute left-10 top-20 bg-[#D9D9D9] p-3 rounded-xl" onPress={() => navigation.goBack()} >
                 <Icon name="chevron-left" color="#444"/>
             </TouchableOpacity>
@@ -86,7 +86,7 @@ const Registration = () => {
 
             {!!error && 
                 <View 
-                    className="absolute opacity-90 z-10 p-4 bg-[#D54826FF] rounded-2xl bottom-3/4"
+                    className="absolute top-72 opacity-90 z-10 p-4 bg-[#D54826FF] rounded-2xl"
                 >
                     <Text className="text-white">
                         {error}
@@ -114,12 +114,21 @@ const Registration = () => {
                 autoCorrect={false} 
                 secureTextEntry={true}
             />
-            <TouchableOpacity
-                onPress={registration}
-                className="absolute bottom-24 bg-[#5b5b5b] w-5/6 p-4 rounded-2xl"
-            >
-                <Text className="text-white text-center font-semibold">Create account</Text>
-            </TouchableOpacity>
+            <View className="flex flex-col w-full items-center gap-2 absolute bottom-10">
+                <TouchableOpacity
+                    onPress={registration}
+                    className="bg-[#5b5b5b] w-5/6 p-4 rounded-2xl"
+                >
+                    <Text className="text-white text-center font-semibold">Create account</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    
+                    className="flex flex-row items-center justify-center bg-transparent w-5/6 p-4 rounded-2xl border border-[#5B5B5B]"
+                >
+                    <Icon className="p-0" size={16} type="antdesign" name="google"/>
+                    <Text className="text-[#5B5B5B] text-center font-semibold">Sign up with Google</Text>
+                </TouchableOpacity>
+            </View>
         </SafeAreaView>
     )
 }
