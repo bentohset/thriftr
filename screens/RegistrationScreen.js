@@ -19,7 +19,7 @@ const Registration = () => {
     const [error, setError] = useState(null);
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const {registerUser, loading} = useAuth();
+    const {registerUser, loading, signInWithGoogle} = useAuth();
     const navigation = useNavigation();
 
     const [fontsLoaded] = useFonts({
@@ -122,7 +122,7 @@ const Registration = () => {
                     <Text className="text-white text-center font-semibold">Create account</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    
+                    onPress={signInWithGoogle}
                     className="flex flex-row items-center justify-center bg-transparent w-5/6 p-4 rounded-2xl border border-[#5B5B5B]"
                 >
                     <Icon className="p-0" size={16} type="antdesign" name="google"/>
