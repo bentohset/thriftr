@@ -9,17 +9,17 @@ import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import * as AuthSession from 'expo-auth-session';
 import { auth, firebase, db } from "../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import {
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithCredential,
   getAuth,
   signOut,
+  createUserWithEmailAndPassword,
 } from "firebase/auth";
 
 import { Platform } from 'react-native';
-import { doc, setDoc, addDoc } from 'firebase/firestore';
+import { doc, setDoc, addDoc, collection } from 'firebase/firestore';
 export const isAndroid = () => Platform.OS === 'android';
 
 WebBrowser.maybeCompleteAuthSession();
@@ -62,7 +62,7 @@ export const AuthProvider = ({children}) => {
         }
         //debug user
       
-        console.log("user is: "+ user);
+        //console.log("user is: "+ user.uid);
         setLoadingInitial(false);
       }),
     []
@@ -70,73 +70,88 @@ export const AuthProvider = ({children}) => {
 
   const logout = () => {
     setLoading(true);
-
+    
     signOut(auth)
       .catch(error => setError(error))
       .finally(() => setLoading(false));
   }
 
-
   async function registerUser(email,password) {
     setEmail(email);
     setPassword(password);
     setLoading(true);
-    
-    await createUserWithEmailAndPassword(auth, email, password)
-    .then((credentials)=> {
-      const user = credentials.user;
-      db.collection("users").doc(user.uid)
-      .set({
-        id: user.uid,
-        email: email,
-      })
-    })
-    .catch((error)=> setError(error))
-    .finally(()=>setLoading(false));
+
+    try{
+      const result = await createUserWithEmailAndPassword(auth, email, password);
+      // const user  = result.user;
+      // await setDoc(doc(db, "users",user.uid),{
+      //   uid: user.uid,
+      //   email: email
+      // })
+    } catch(error){
+      setError(error);
+    } finally{
+      setLoading(false);
+    }
   } 
 
-  // const signInWithGoogle = async()=> promptAsync();
-  //   useEffect(() => {
-  //     if (response?.type === 'success') {
-  //       const { id_token } = response.params;
-  //       const credential = GoogleAuthProvider.credential(id_token);
-  //       signInWithCredential(auth, credential);
+  const signInWithGoogle = async()=> promptAsync();
+  useEffect(() => {
+    if (response?.type === 'success') {
+      const { id_token } = response.params;
+      const credential = GoogleAuthProvider.credential(id_token);
+      signInWithCredential(auth, credential);
+    }
+  }, [response]);
+
+  // const signInWithGoogle = async() =>{
+  //   setLoading(true);
+  //   await promptAsync().then(async (response) => {
+  //     if (response.type === "success"){
+  //       const {idToken} = response.params;
+  //       const credential = GoogleAuthProvider.credential(idToken);
+        
+  //       try{
+  //         const result = await signInWithCredential(auth, credential);
+  //         const user = result.user;
+  //         await setDoc(doc(db, "users",user.uid),{
+  //           uid: user.uid,
+  //           email: email
+  //         })
+  //       }
+  //       await signInWithCredential(auth, credential);
   //     }
-  //   }, [response]);
+  //     return Promise.reject();
+  //   }).catch(error => setError(error))
+  //   .finally(()=> setLoading(false));
 
-  const signInWithGoogle = async() =>{
-    setLoading(true);
-    await promptAsync().then(async (response) => {
-      if (response.type === "success"){
-        const {idToken} = response.params;
-        const credential = GoogleAuthProvider.credential(idToken);
-
-        await signInWithCredential(auth, credential);
-      }
-      return Promise.reject();
-    }).catch(error => setError(error))
-    .finally(()=> setLoading(false));
-
-  };
+  // };
   
   // memoization optimisation
   // caches value so no need for recalculation
   // only runs again when variables update
   // https://www.w3schools.com/react/react_usememo.asp
-  const memoedValue = useMemo(
-    ()=>({
+  // const memoedValue = useMemo(
+  //   ()=>({
+  //     user,
+  //     loading,
+  //     error,
+  //     signInWithGoogle,      //added google sign in option
+  //     registerUser,
+  //     logout,
+  //   }),
+  //   [user, loading, error]
+  // );
+
+  return (
+    <AuthContext.Provider value={{
       user,
       loading,
       error,
       signInWithGoogle,      //added google sign in option
       registerUser,
       logout,
-    }),
-    [user, loading, error]
-  );
-
-  return (
-    <AuthContext.Provider value={memoedValue}>
+    }}>
       {!loadingInitial && children}
     </AuthContext.Provider>
   )

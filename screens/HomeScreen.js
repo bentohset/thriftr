@@ -25,7 +25,7 @@ const HomeScreen = () => {
     return (
         <View style={styles.container}>
             <Text className="text-red-400">
-                Hello, {user?.email}!
+                Hello, {user?.uid}!
             </Text>
             <Button title="Sign out" style={styles.button} onPress={logout}/>
             <Button 

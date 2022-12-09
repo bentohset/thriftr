@@ -7,19 +7,20 @@ import { View, Text, TextInput, StyleSheet , Button, TouchableOpacity, SafeAreaV
 import React, {useState, useEffect, useLayoutEffect} from "react";
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import { useNavigation } from '@react-navigation/native';
-import { auth, firebase } from '../firebase'
+import { auth, firebase, db } from '../firebase'
 import '@firebase/firestore';
+import { doc, setDoc, addDoc, collection } from 'firebase/firestore';
 import useAuth from "../hooks/useAuth";
-import { doc, FieldValue } from "firebase/firestore";
 import { Icon } from '@rneui/themed';
 import { useFonts } from 'expo-font';
+
 
 
 const Registration = () => {
     const [error, setError] = useState(null);
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const {registerUser, loading, signInWithGoogle} = useAuth();
+    const {user, registerUser, loading, signInWithGoogle} = useAuth();
     const navigation = useNavigation();
 
     const [fontsLoaded] = useFonts({
@@ -32,7 +33,7 @@ const Registration = () => {
             return;
         }
         try {
-            registerUser(email, password);
+            registerUser(email, password)
             // .then(()=>{
             //     dbRoot.doc(user, user.uid)
             //     .set({
@@ -44,36 +45,6 @@ const Registration = () => {
             setError(error.message);
         }
     }
-    // registerUser = async (email, password, firstName, lastName) => {
-    //     await firebase.auth().createUserWithEmailAndPassword(email, password)
-    //     .then(() => {
-    //         firebase.auth().currentUser.sendEmailVerification({
-    //             handleCodeInApp: true,
-    //             url:'https://thriftr-1e99d.firebaseapp.com',
-    //         })
-    //         .then(() => {
-    //             alert('verification email sent')
-    //         }).catch((error) => {
-    //             alert.apply(error.message)
-    //         })
-    //         .then(() => {
-    //             firebase.firestore().collection('users')
-    //             .doc(firebase.auth().currentUser.uid)
-    //             .set({
-    //                 firstName,
-    //                 lastName,
-    //                 email,
-    //             })
-    //         })
-    //         .catch((error) => {
-    //             alert(error.message)
-    //         })
-    //     })
-    //     .catch((error) => {
-    //         alert(error.message)
-    //     })
-    //     console.log(firebase.auth().currentUser);
-    // }
 
     return (
         <SafeAreaView className="flex-1 justify-center items-center">

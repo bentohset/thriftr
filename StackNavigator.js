@@ -4,7 +4,11 @@ what is navigatable by profiles who are logged in/ not logged in
 */
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { doc, updateDoc, setDoc, getDoc } from "firebase/firestore";
+import { db } from "./firebase";
+import useAuth from "./hooks/useAuth"
+import { View } from 'react-native';
 
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -12,16 +16,24 @@ import ProfileScreen from './screens/ProfileScreen';
 import ForgetPasswordScreen from './screens/ForgetPasswordScreen';
 import RegistrationScreen from './screens/RegistrationScreen';
 import SettingsScreen from './screens/SettingsScreen';
-import useAuth from "./hooks/useAuth"
 import GetStartedScreen from './screens/GetStartedScreen';
 import ConfigureProfileScreen from './screens/ConfigureProfileScreen';
-import { View } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () =>{
   const { user } = useAuth();
+  const [docExists, setDocExistence] = useState(false);
   
+
+
+  // getDoc(doc(db, "users", user.uid)).then(docSnap => {
+  //   if (docSnap.exists()) {
+  //     setDocExistence(true);
+  //   } else {
+  //     setDocExistence(false);
+  //   }
+  // })
   
     return(
       //TODO: only direct to configureprofile screen if user username and fullname is not configured
@@ -40,12 +52,13 @@ const StackNavigator = () =>{
             </>
           ) : (
             <>
-            <Stack.Screen name="GetStarted" component={GetStartedScreen} />
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Registration" component = {RegistrationScreen} />
-            <Stack.Screen name = "ForgetPassword" component = {ForgetPasswordScreen}/>
+              <Stack.Screen name="GetStarted" component={GetStartedScreen} />
+              <Stack.Screen name="Login" component={LoginScreen} />
+              <Stack.Screen name="Registration" component = {RegistrationScreen} />
+              <Stack.Screen name="ConfigureProfile" component={ConfigureProfileScreen} />
+              <Stack.Screen name = "ForgetPassword" component = {ForgetPasswordScreen}/>
             </>
-            )}
+          )}
         </Stack.Navigator>
 
     )
