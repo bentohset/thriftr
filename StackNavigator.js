@@ -46,6 +46,7 @@ const StackNavigator = () =>{
         >
           {user ? (
             <>
+              <Stack.Screen name="ConfigureProfile" component={ConfigureProfileScreen} />
               <Stack.Screen name="Home" component={HomeScreen} />
               <Stack.Screen name="Profile" component={ProfileScreen} />
               <Stack.Screen name = "Settings" component = {SettingsScreen} />
@@ -55,7 +56,6 @@ const StackNavigator = () =>{
               <Stack.Screen name="GetStarted" component={GetStartedScreen} />
               <Stack.Screen name="Login" component={LoginScreen} />
               <Stack.Screen name="Registration" component = {RegistrationScreen} />
-              <Stack.Screen name="ConfigureProfile" component={ConfigureProfileScreen} />
               <Stack.Screen name = "ForgetPassword" component = {ForgetPasswordScreen}/>
             </>
           )}
