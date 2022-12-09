@@ -27,24 +27,15 @@ WebBrowser.maybeCompleteAuthSession();
 const AuthContext = createContext({});
 
 const config = {    //sign in configurations
-  // clientId: isAndroid() ? '281048744585-b7120nj53i0uoka56de6nmj7n6luskpg.apps.googleusercontent.com' : '281048744585-ribaqd26962n5qnmks8jga1fk198qqeu.apps.googleusercontent.com',
-  // androidClientId:'281048744585-bgk849tl2ob1db0ptvvtlslsa5faqm3n.apps.googleusercontent.com', //android taken from google-services.json
-  // iosClientId: '281048744585-ribaqd26962n5qnmks8jga1fk198qqeu.apps.googleusercontent.com', //ios taken from google-services-info.plist
   clientId: "281048744585-u927f736b5ho76eri7tt96peg9ok03et.apps.googleusercontent.com",
-  // webClientId: '281048744585-u927f736b5ho76eri7tt96peg9ok03et.apps.googleusercontent.com',
-  // scopes: ["profile","email"],
-  // permissions: ["public_profile","email","gender","location"],
-  // redirectUri: AuthSession.makeRedirectUri({ native: 'com.googleusercontent.apps.thriftr://redirect',useProxy: true })
 }
 
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
-
   const [error,setError] = useState(null);
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest(config);
   const [loadingInitial, setLoadingInitial] = useState(true);
   const [loading, setLoading] = useState(false);
-
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   
