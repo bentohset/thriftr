@@ -4,12 +4,12 @@ what is navigatable by profiles who are logged in/ not logged in
 */
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React, { useState, useEffect } from 'react';
-import { doc, updateDoc, setDoc, getDoc } from "firebase/firestore";
-import { db } from "./firebase";
-import useAuth from "./hooks/useAuth"
+import React, { useState, useEffect, useContext } from 'react';
+import useAuth from "./hooks/useAuth";
+import useDocExists from './hooks/useDocExists';
 import { View } from 'react-native';
 
+import AppContext from './components/AppContext';
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import ProfileScreen from './screens/ProfileScreen';
@@ -23,9 +23,6 @@ const Stack = createNativeStackNavigator();
 
 const StackNavigator = () =>{
   const { user } = useAuth();
-  const [docExists, setDocExistence] = useState(false);
-  
-
 
   // getDoc(doc(db, "users", user.uid)).then(docSnap => {
   //   if (docSnap.exists()) {
@@ -46,10 +43,10 @@ const StackNavigator = () =>{
         >
           {user ? (
             <>
-              <Stack.Screen name="ConfigureProfile" component={ConfigureProfileScreen} />
               <Stack.Screen name="Home" component={HomeScreen} />
               <Stack.Screen name="Profile" component={ProfileScreen} />
               <Stack.Screen name = "Settings" component = {SettingsScreen} />
+              <Stack.Screen name="ConfigureProfile" component={ConfigureProfileScreen} />
             </>
           ) : (
             <>

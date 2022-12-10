@@ -8,7 +8,7 @@ import { signOut, getAuth } from 'firebase/auth';
 const HomeScreen = () => {
     const navigation = useNavigation();
     const {user, logout} = useAuth();
-
+    
     // useEffect(() => {
     //     firebase.firestore().collection('users')
     //     .doc(firebase.auth().currentUser.uid).get()

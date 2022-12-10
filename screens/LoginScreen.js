@@ -6,13 +6,13 @@ import { View, Text , Button, StyleSheet, TextInput, TouchableOpacity, SafeAreaV
 import { useNavigation } from '@react-navigation/native';
 import React, {useState, useLayoutEffect} from 'react'
 import { auth, firebase } from "../firebase";
-import useAuth from '../hooks/useAuth';
+import useAuth from "../hooks/useAuth";
 import { signInWithEmailAndPassword, getAuth} from 'firebase/auth';
 import { Icon } from "react-native-elements";
 
 
 const LoginScreen = () => {
-  //const{ signInWithGoogle } = useAuth();      //use google as authentication
+  const {signInWithGoogle} = useAuth();      //use google as authentication
   const navigation = useNavigation();
   const [email, setEmail] = useState('')
   const [error, setError] = useState(null);
@@ -78,7 +78,9 @@ const LoginScreen = () => {
           <Text className="text-white text-center font-semibold">Sign in</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          
+          onPress={()=>{
+            signInWithGoogle();
+          }}
           className="flex flex-row items-center justify-center bg-transparent w-5/6 p-4 rounded-2xl border border-[#5B5B5B]"
         >
           <Icon className="p-0" size={16} type="antdesign" name="google"/>

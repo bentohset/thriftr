@@ -19,7 +19,7 @@ import {
 } from "firebase/auth";
 
 import { Platform } from 'react-native';
-import { doc, setDoc, addDoc, collection } from 'firebase/firestore';
+import { doc, setDoc, addDoc, onSnapshot } from 'firebase/firestore';
 export const isAndroid = () => Platform.OS === 'android';
 
 WebBrowser.maybeCompleteAuthSession();
@@ -38,7 +38,7 @@ export const AuthProvider = ({children}) => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  
+  const [exists,setExists] = useState(false);
 
   useEffect(
     () =>
@@ -46,6 +46,7 @@ export const AuthProvider = ({children}) => {
         if (user) {
           //if user is logged in
           setUser(user);
+          console.log(user);
         }
         else{
           //not logged in
@@ -58,6 +59,16 @@ export const AuthProvider = ({children}) => {
       }),
     []
   );
+
+  useEffect(() =>{
+    if (user != null){
+      const uID = user.uid;
+      const unsub = onSnapshot(doc(db, "users",uID),
+          (doc) => setExists(doc.exists)
+      );
+      return ()=> unsub();
+    }
+  },[user]);
 
   const logout = () => {
     setLoading(true);
@@ -101,21 +112,11 @@ export const AuthProvider = ({children}) => {
   //     if (response.type === "success"){
   //       const {idToken} = response.params;
   //       const credential = GoogleAuthProvider.credential(idToken);
-        
-  //       try{
-  //         const result = await signInWithCredential(auth, credential);
-  //         const user = result.user;
-  //         await setDoc(doc(db, "users",user.uid),{
-  //           uid: user.uid,
-  //           email: email
-  //         })
-  //       }
   //       await signInWithCredential(auth, credential);
   //     }
   //     return Promise.reject();
   //   }).catch(error => setError(error))
   //   .finally(()=> setLoading(false));
-
   // };
   
   // memoization optimisation
@@ -139,6 +140,7 @@ export const AuthProvider = ({children}) => {
       user,
       loading,
       error,
+      exists,
       signInWithGoogle,      //added google sign in option
       registerUser,
       logout,

@@ -46,6 +46,10 @@ const Registration = () => {
         }
     }
 
+    function toConfig(){
+        console.log('hello');
+    }
+
     return (
         <SafeAreaView className="flex-1 justify-center items-center">
             <TouchableOpacity className="absolute left-10 top-20 bg-[#D9D9D9] p-3 rounded-xl" onPress={() => navigation.goBack()} >
@@ -87,13 +91,18 @@ const Registration = () => {
             />
             <View className="flex flex-col w-full items-center gap-2 absolute bottom-10">
                 <TouchableOpacity
-                    onPress={registration}
+                    onPress={()=>{
+                        registration();
+                        navigation.navigate('ConfigureProfile');
+                    }}
                     className="bg-[#5b5b5b] w-5/6 p-4 rounded-2xl"
                 >
                     <Text className="text-white text-center font-semibold">Create account</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={signInWithGoogle}
+                    onPress={()=>{
+                        signInWithGoogle();
+                    }}
                     className="flex flex-row items-center justify-center bg-transparent w-5/6 p-4 rounded-2xl border border-[#5B5B5B]"
                 >
                     <Icon className="p-0" size={16} type="antdesign" name="google"/>

@@ -5,10 +5,12 @@ set full name and username then send to firebase firestore
 */
 import { View, Text, TouchableOpacity, TextInput, SafeAreaView } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { doc, updateDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import useAuth from "../hooks/useAuth";
+import useDocExists from '../hooks/useDocExists';
+import AppContext from '../components/AppContext';
 
 const ConfigureProfileScreen = () => {
   const [fullName, setFullName] = useState('');
@@ -16,6 +18,8 @@ const ConfigureProfileScreen = () => {
   const [error, setError] = useState(null);
   const navigation = useNavigation();
   const {user} = useAuth();
+  const myContext = useContext(AppContext);
+
 
   function configProfile(){
     if (fullName === '' || userName === '') {
@@ -68,7 +72,9 @@ const ConfigureProfileScreen = () => {
       />
       <TouchableOpacity
         className="absolute bottom-24 bg-[#5b5b5b] w-5/6 p-4 rounded-2xl"
-        onPress={configProfile}
+        onPress={()=>{
+          configProfile();
+        }}
       >
         <Text className="text-white text-center font-semibold">Continue</Text>
       </TouchableOpacity>
