@@ -24,6 +24,7 @@ const Stack = createNativeStackNavigator();
 const StackNavigator = () =>{
   const { user } = useAuth();
 
+  const docExistence = (user) ? useDocExists(user) : false;
   // getDoc(doc(db, "users", user.uid)).then(docSnap => {
   //   if (docSnap.exists()) {
   //     setDocExistence(true);

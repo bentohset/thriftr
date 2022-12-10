@@ -15,7 +15,7 @@ export const useDocExists = () => {
             .then(setExists(doc.exists))
             .catch(setError(error))
         }
-    },[]);
+    },[user]);
 
   return exists;
 }
