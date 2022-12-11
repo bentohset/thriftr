@@ -7,7 +7,7 @@ stack navigator in seperate file
 
 import React, {useState} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import StackNavigator from './StackNavigator';
+import StackNavigator from './navigation/StackNavigator';
 import { LogBox } from 'react-native';
 LogBox.ignoreAllLogs(); //ignore log notification by message (for now)
 import { AuthProvider } from './hooks/useAuth';

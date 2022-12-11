@@ -16,6 +16,7 @@
     "@react-native-community/google-signin": "^5.0.0",
     "@react-native-firebase/app": "^16.4.6",
     "@react-native-google-signin/google-signin": "^8.2.1",
+    "@react-navigation/bottom-tabs": "^6.5.0",
     "@react-navigation/native": "^6.0.16",
     "@react-navigation/native-stack": "^6.9.4",
     "@rneui/base": "^4.0.0-rc.7",
