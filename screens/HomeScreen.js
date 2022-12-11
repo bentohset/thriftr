@@ -1,32 +1,149 @@
-import { View, Text ,Button, SafeAreaView, TouchableOpacity} from 'react-native'
+import { View, Text ,Button, SafeAreaView, TouchableOpacity, Image, StyleSheet} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect , useState } from 'react'
+import React, { useEffect , useRef, useState } from 'react'
 import { auth, firebase } from '../firebase';
 import useAuth from "../hooks/useAuth";
 import { signOut, getAuth } from 'firebase/auth';
 import { Icon } from '@rneui/themed';
+import Swiper from 'react-native-deck-swiper';
+
+const DUMMY_DATA = [
+    {
+        clothingName:"Shirt with stripes",
+        size: "XL",
+        price: 5,
+        condition:"unused",
+        photoURL:"https://github.com/twbs.png",
+        id: 1,
+    },
+    {
+        clothingName:"Buttoned Shirt",
+        size: "S",
+        price: 12,
+        condition:"used",
+        photoURL:"https://github.com/npm.png?size=200",
+        id: 2,
+    },
+    {
+        clothingName:"Shirt Oversized-fit",
+        size: "L",
+        price: 10,
+        condition:"Worn",
+        photoURL:"https://github.com/github.png?size=40",
+        id:3,
+    }
+];
 
 const HomeScreen = () => {
     const navigation = useNavigation();
     const {user, logout} = useAuth();
+    const swipeRef = useRef(null);
 
     return (
-        <SafeAreaView>
+        <SafeAreaView className="flex-1">
+            {/* Header */}
             <View className="flex-row pb-3 items-center mx-4 space-x-2">
                 <Text className="font-bold text-3xl">
                     Discover
                 </Text>
             </View>
-            <View className="flex justify-center items-center">
-                <Text className="text-red-400">
-                    Hello, {user?.uid}!
-                </Text>
-                <Button title="Sign out" className="mt-10" onPress={logout}/>
+
+            {/* Cards */}
+            <View className="-mt-6">
+                <Swiper
+                    ref={swipeRef}
+                    cards={DUMMY_DATA}
+                    stackSize={5}
+                    cardIndex={0}
+                    animateCardOpacity
+                    disableBottomSwipe
+                    onSwipedLeft={()=>{
+                        console.log('Swipe PASS')
+                    }}
+                    onSwipedRight={()=>{
+                        console.log('Swipe LIKE')
+                    }}
+                    onSwipedTop={()=>{
+                        console.log('Swipe CART')
+                    }}
+                    overlayLabels={{
+                        left:{
+                            title: "NOPE",
+                            style:{
+                                label:{
+                                    textAlign:"right",
+                                    color:"red",
+                                }
+                            }
+                        },
+                        right:{
+                            title:"LIKE",
+                            style:{
+                                label:{
+                                    color:"#4DEd30"
+                                }
+                            }
+                        }
+                    }}
+                    renderCard={(card)=>(
+                        <View key={card.id} className="relative bg-white h-3/4 rounded-xl">
+                            <Image className="absolute top-0 h-full w-full rounded-xl" source={{uri: card.photoURL}}/>
+                            
+                            <View
+                                style={styles.cardShadow}
+                                className="absolute flex-row bottom-0 bg-white w-full 
+                                    justify-between items-center h-20 px-6 py-2 rounded-b-xl"
+                            >
+                                <View>
+                                    <Text className="text-x; font-bold">{card.clothingName} {card.size}</Text>
+                                    <Text>{card.condition}</Text>
+                                </View>
+                                <Text className="text-2xl font-bold">{card.price}</Text>
+                            </View>
+                            
+                        </View>
+                        
+                    )}
+                />
             </View>
 
+            <View className="flex-1 flex-row justify-evenly w-full absolute bottom-5">
+                <TouchableOpacity 
+                    onPress={()=> swipeRef.current.swipeLeft()}
+                    className="items-center justify-center rounded-full w-16 h-16 bg-red-200"
+                >
+                    <Icon name="cross" type="entypo" color="red"/>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={()=> swipeRef.current.swipeTop()}
+                    className="items-center justify-center rounded-full w-16 h-16 bg-yellow-200"
+                >
+                    <Icon name="shopping-bag" type="feather" color="brown"/>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={()=> swipeRef.current.swipeRight()}
+                    className="items-center justify-center rounded-full w-16 h-16 bg-green-200"
+                >
+                    <Icon name="heart" type="antdesign" color="green"/>
+                </TouchableOpacity>
+            </View>
         </SafeAreaView>
     )
 }
 
 
 export default HomeScreen
+
+// can only create shadow with styles (tailwind dont have)
+const styles = StyleSheet.create({
+    cardShadow:{
+        shadowColor: "#000",
+        shadowOffset:{
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 1.41,
+        elevation: 2,
+    }
+})

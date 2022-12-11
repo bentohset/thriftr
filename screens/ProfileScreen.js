@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView } from 'react-native'
+import { View, Text, SafeAreaView, Button } from 'react-native'
 import React from 'react'
 import useAuth from '../hooks/useAuth';
 
@@ -15,7 +15,13 @@ const ProfileScreen = () => {
         {/* TODO: Search bar to be IMPLEMENTED */}
       </View>
 
-      {/* Chats list*/}
+      
+      <View className="flex justify-center items-center">
+        <Text className="text-red-400">
+          Hello, {user?.uid}!
+        </Text>
+        <Button title="Sign out" className="mt-10" onPress={logout}/>
+      </View>
 
 
     </SafeAreaView>
