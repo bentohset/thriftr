@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react'
 import { doc, updateDoc, setDoc, getDoc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
 
-export const useDocExists = () => {
+export const useDocExists = (user) => {
     const [exists,setExists] = useState(false);
     const [error,setError] = useState(null);
 
@@ -12,8 +12,7 @@ export const useDocExists = () => {
             const uID = user.uid;
             console.log(uID);
             onSnapshot(doc(db, "users",uID))
-            .then(setExists(doc.exists))
-            .catch(setError(error))
+            setExists(doc.exists)
         }
     },[user]);
 
