@@ -131,7 +131,7 @@ const ProfileScreen = () => {
       </View>
 
       {/* all clothes */}
-      <ScrollView className=" px-5 top-6 gap-1 h-4/6">
+      <ScrollView className=" px-5 top-6 gap-1 h-3/6">
       <View className="gap-1 flex-row grid-cols-3">
         {/* clothes card */}
         <TouchableOpacity 
