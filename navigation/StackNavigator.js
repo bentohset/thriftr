@@ -19,16 +19,8 @@ import BottomTabNavigator from './BottomTabNavigator';
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () =>{
-  const { user } = useAuth();
+  const { user, configState } = useAuth();
 
-  const docExistence = (user) ? useDocExists(user) : false;
-  // getDoc(doc(db, "users", user.uid)).then(docSnap => {
-  //   if (docSnap.exists()) {
-  //     setDocExistence(true);
-  //   } else {
-  //     setDocExistence(false);
-  //   }
-  // })
   
     return(
       //TODO: only direct to configureprofile screen if user username and fullname is not configured
@@ -40,16 +32,22 @@ const StackNavigator = () =>{
           }}
         >
           {user ? (
-            <>
+            configState ? (
+              <>
               <Stack.Screen name="Tabs" component={BottomTabNavigator} />
+              </>
+            ):(
+            <>
+              <Stack.Screen name="ConfigureProfile" component={ConfigureProfileScreen} />
             </>
+            )
           ) : (
             <>
               <Stack.Screen name="GetStarted" component={GetStartedScreen} />
               <Stack.Screen name="Login" component={LoginScreen} />
               <Stack.Screen name="Registration" component = {RegistrationScreen} />
               <Stack.Screen name = "ForgetPassword" component = {ForgetPasswordScreen}/>
-              <Stack.Screen name="ConfigureProfile" component={ConfigureProfileScreen} />
+              
             </>
           )}
         </Stack.Navigator>
