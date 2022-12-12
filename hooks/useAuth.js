@@ -46,7 +46,7 @@ export const AuthProvider = ({children}) => {
         if (user) {
           //if user is logged in
           setUser(user);
-          console.log(user);
+          //console.log(user);
         }
         else{
           //not logged in
