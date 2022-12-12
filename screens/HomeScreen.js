@@ -98,7 +98,7 @@ const HomeScreen = () => {
                                     <Text className="text-x; font-bold">{card.clothingName} {card.size}</Text>
                                     <Text>{card.condition}</Text>
                                 </View>
-                                <Text className="text-2xl font-bold">{card.price}</Text>
+                                <Text className="text-2xl font-bold">${card.price}</Text>
                             </View>
                             
                         </View>
