@@ -10,7 +10,7 @@ export const useDocExists = (user) => {
     useEffect(() =>{
         if (user != null){
             const uID = user.uid;
-            console.log(uID);
+            //console.log(uID);
             onSnapshot(doc(db, "users",uID))
             setExists(doc.exists)
         }

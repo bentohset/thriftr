@@ -19,7 +19,7 @@ import {
 } from "firebase/auth";
 
 import { Platform } from 'react-native';
-import { doc, setDoc, addDoc, onSnapshot } from 'firebase/firestore';
+import { getDoc ,doc, setDoc, addDoc, onSnapshot } from 'firebase/firestore';
 export const isAndroid = () => Platform.OS === 'android';
 
 WebBrowser.maybeCompleteAuthSession();
@@ -38,7 +38,8 @@ export const AuthProvider = ({children}) => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [exists,setExists] = useState(false);
+  const [configState, setConfigstate] = useState(false);
+
 
   useEffect(
     () =>
@@ -46,7 +47,7 @@ export const AuthProvider = ({children}) => {
         if (user) {
           //if user is logged in
           setUser(user);
-          console.log(user);
+          //console.log(user);
         }
         else{
           //not logged in
@@ -60,15 +61,27 @@ export const AuthProvider = ({children}) => {
     []
   );
 
-  useEffect(() =>{
-    if (user != null){
-      const uID = user.uid;
-      const unsub = onSnapshot(doc(db, "users",uID),
-          (doc) => setExists(doc.exists)
-      );
-      return ()=> unsub();
-    }
-  },[user]);
+  async function configurationState() {
+    if (user ){
+      //if user is logged in
+      const docRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setConfigstate(true);
+        console.log("exists")
+      }
+      else{
+        setConfigstate(false);
+        console.log("dun exists")
+      }
+      console.log(configState)
+  }}
+  
+configurationState();
+
+
+
+
 
   const logout = () => {
     setLoading(true);
@@ -140,7 +153,8 @@ export const AuthProvider = ({children}) => {
       user,
       loading,
       error,
-      exists,
+      configState,
+      configurationState,
       signInWithGoogle,      //added google sign in option
       registerUser,
       logout,

@@ -20,7 +20,7 @@ const Registration = () => {
     const [error, setError] = useState(null);
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const {user, registerUser, loading, signInWithGoogle} = useAuth();
+    const {user, registerUser, loading, signInWithGoogle, configurationState} = useAuth();
     const navigation = useNavigation();
 
     const [fontsLoaded] = useFonts({
@@ -102,6 +102,7 @@ const Registration = () => {
                 <TouchableOpacity
                     onPress={()=>{
                         signInWithGoogle();
+                        configurationState();
                     }}
                     className="flex flex-row items-center justify-center bg-transparent w-5/6 p-4 rounded-2xl border border-[#5B5B5B]"
                 >
