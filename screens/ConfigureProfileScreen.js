@@ -21,7 +21,7 @@ const ConfigureProfileScreen = () => {
   const myContext = useContext(AppContext);
 
 
-  function configProfile(){
+  function configProfileName(){
     if (fullName === '' || userName === '') {
       setError('fullname and username are required');
       return;
@@ -42,7 +42,7 @@ const ConfigureProfileScreen = () => {
   return (
     <SafeAreaView className="flex-1 justify-center items-center">
       <Text className="absolute font-bold text-5xl left-10 top-40 leading-loose">
-        Configure {'\n'} Profile
+        You're In!
       </Text>
       {!!error && 
         <View 
@@ -53,6 +53,13 @@ const ConfigureProfileScreen = () => {
           </Text>
         </View>
       }
+
+      <Text className="absolute font-bold text-lg left-12 top-60 leading-loose">
+        Now, please tell us your name.
+      </Text>
+
+
+      
       <Text className="right-1/3 font-semibold">Full Name</Text>
       <TextInput 
         className="bg-[#D9D9D9] w-5/6 h-12 m-4 p-4 rounded-xl"
@@ -73,8 +80,8 @@ const ConfigureProfileScreen = () => {
       <TouchableOpacity
         className="absolute bottom-24 bg-[#5b5b5b] w-5/6 p-4 rounded-2xl"
         onPress={()=>{
-          configProfile();
-          configurationState();
+          configProfileName();
+          navigation.navigate('ConfigureProfileScreenAge')
         }}
       >
         <Text className="text-white text-center font-semibold">Continue</Text>

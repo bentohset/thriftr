@@ -16,6 +16,8 @@ import GetStartedScreen from '../screens/GetStartedScreen';
 import ConfigureProfileScreen from '../screens/ConfigureProfileScreen';
 import BottomTabNavigator from './BottomTabNavigator';
 import AddClothesModal from './AddClothesModal';
+import ConfigureProfileScreenAge from '../screens/ConfigureProfileScreenAge';
+import ConfigureProfileScreenTags from '../screens/ConfigureProfileScreenTags';
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +45,8 @@ const StackNavigator = () =>{
               ):(
               <>
                 <Stack.Screen name="ConfigureProfile" component={ConfigureProfileScreen} />
+                <Stack.Screen name="ConfigureProfileScreenAge" component={ConfigureProfileScreenAge} />
+                <Stack.Screen name="ConfigureProfileScreenTags" component={ConfigureProfileScreenTags} />
             </>
             )
           ) : (

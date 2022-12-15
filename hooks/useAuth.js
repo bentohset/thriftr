@@ -85,7 +85,7 @@ configurationState();
 
   const logout = () => {
     setLoading(true);
-    
+    setConfigstate(false);
     signOut(auth)
       .catch(error => setError(error))
       .finally(() => setLoading(false));
@@ -119,18 +119,7 @@ configurationState();
     }
   }, [response]);
 
-  // const signInWithGoogle = async() =>{
-  //   setLoading(true);
-  //   await promptAsync().then(async (response) => {
-  //     if (response.type === "success"){
-  //       const {idToken} = response.params;
-  //       const credential = GoogleAuthProvider.credential(idToken);
-  //       await signInWithCredential(auth, credential);
-  //     }
-  //     return Promise.reject();
-  //   }).catch(error => setError(error))
-  //   .finally(()=> setLoading(false));
-  // };
+  
   
   // memoization optimisation
   // caches value so no need for recalculation
