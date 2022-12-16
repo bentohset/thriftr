@@ -26,68 +26,73 @@ const ConfigureProfileScreen = () => {
       setError('fullname and username are required');
       return;
     }
-    try{
-      const docRef = doc(db,"users", user.uid);
-      setDoc(docRef,{
-        full_name: fullName,
-        user_name: userName,
-        uid: user.uid,
-        email: user.email,
-      })
-    } catch (error){
-      setError(error);
-    }
+    const docRef = doc(db,"users", user.uid);
+    setDoc(docRef,{
+      full_name: fullName,
+      user_name: userName,
+      uid: user.uid,
+      email: user.email,
+    })
+    .then(()=>{navigation.navigate('ConfigureProfileScreenAge')})   //put the navigate within the function so it will only navigate when there is a value
+    .catch ((error)=>{setError(error)})
   }
 
   return (
-    <SafeAreaView className="flex-1 justify-center items-center">
-      <Text className="absolute font-bold text-5xl left-10 top-40 leading-loose">
-        You're In!
-      </Text>
+    <SafeAreaView className="flex-1">
       {!!error && 
         <View 
-          className="absolute top-72 opacity-90 z-10 p-4 bg-[#D54826FF] rounded-2xl"
+          className="flex justify-center self-center absolute bottom-36 opacity-90 z-10 p-4 bg-[#D54826FF] rounded-2xl"
         >
           <Text className="text-white">
               {error}
           </Text>
         </View>
       }
+      <View className="p-4 mt-20">
+        <Text className="font-bold text-5xl leading-loose">
+          You're In!
+        </Text>
+        
+        <Text className="font-bold text-lg leading-loose mt-5">
+          Now, please tell us your name.
+        </Text>
+      </View>
 
-      <Text className="absolute font-bold text-lg left-12 top-60 leading-loose">
-        Now, please tell us your name.
-      </Text>
-
-
-      
-      <Text className="right-1/3 font-semibold">Full Name</Text>
-      <TextInput 
-        className="bg-[#D9D9D9] w-5/6 h-12 m-4 p-4 rounded-xl"
-        value={fullName} 
-        onChangeText={(fullName) => setFullName(fullName)} 
-        autoCorrect={false}
-        placeholder="John Appleseed" 
-      />
-      <Text className="right-1/3 font-semibold">Username</Text>
-      <TextInput 
-        placeholder="username" 
-        className="bg-[#D9D9D9] w-5/6 h-12 m-4 p-4 rounded-xl"
-        value={userName} 
-        onChangeText={(userName) => setUserName(userName)} 
-        autoCorrect={false}
-        autoCapitalize={false}
-      />
-      <TouchableOpacity
-        className="absolute bottom-24 bg-[#5b5b5b] w-5/6 p-4 rounded-2xl"
-        onPress={()=>{
-          configProfileName();
-          navigation.navigate('ConfigureProfileScreenAge')
-        }}
-      >
-        <Text className="text-white text-center font-semibold">Continue</Text>
-      </TouchableOpacity>
-      <Text className="font-semibold underline" onPress={()=>navigation.navigate('Home')}>
-        Skip</Text>
+      <View className="flex-1 items-start p-2 pr-8 m-1 mt-10">
+        <Text className="font-semibold m-1">Full Name</Text>
+        <TextInput 
+          className="bg-[#D9D9D9] w-full h-12 m-2 p-4 rounded-xl"
+          value={fullName} 
+          onChangeText={(fullName) => setFullName(fullName)} 
+          autoCorrect={false}
+          placeholder="John Appleseed" 
+        />
+        <Text className="font-semibold m-1">Username</Text>
+        <TextInput 
+          placeholder="Username" 
+          className="bg-[#D9D9D9] w-full h-12 m-2 p-4 rounded-xl"
+          value={userName} 
+          onChangeText={(userName) => setUserName(userName)} 
+          autoCorrect={false}
+          autoCapitalize={false}
+        />
+      </View>
+      <View className="flex items-center justify-center p-4">
+        <TouchableOpacity
+          className="bg-[#5b5b5b] w-full p-4 rounded-2xl"
+          onPress={()=>{
+            configProfileName();
+            
+          }}
+        >
+          <Text className="text-white text-center font-semibold">
+            Continue
+          </Text>
+        </TouchableOpacity>
+        {/* <Text className="font-semibold underline text-center mt-4" onPress={()=>navigation.navigate('Home')}>
+          Skip
+        </Text> */}
+      </View>
     </SafeAreaView>
   )
 }

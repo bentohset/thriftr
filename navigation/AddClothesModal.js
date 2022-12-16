@@ -136,10 +136,10 @@ const AddClothesModal = () => {
         >
           <Icon name="x" type="octicon" size={30}/>
         </TouchableOpacity>
-      <Text className="font-bold text-3xl text-center">
-        List Clothing
-      </Text>
-    </View>
+        <Text className="font-bold text-3xl text-center">
+          List Clothing
+        </Text>
+      </View>
 
       
     <ScrollView 
