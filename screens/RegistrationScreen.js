@@ -93,7 +93,7 @@ const Registration = () => {
                 <TouchableOpacity
                     onPress={()=>{
                         registration();
-                        navigation.navigate('ConfigureProfile');
+                        
                     }}
                     className="bg-[#5b5b5b] w-5/6 p-4 rounded-2xl"
                 >
