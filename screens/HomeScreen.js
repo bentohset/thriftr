@@ -1,11 +1,12 @@
 import { View, Text ,Button, SafeAreaView, TouchableOpacity, Image, StyleSheet} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect , useRef, useState } from 'react'
-import { auth, firebase } from '../firebase';
+import { auth, firebase, db } from '../firebase';
 import useAuth from "../hooks/useAuth";
 import { signOut, getAuth } from 'firebase/auth';
 import { Icon } from '@rneui/themed';
 import Swiper from 'react-native-deck-swiper';
+import { doc, collection, onSnapshot, updateDoc, setDoc, addDoc } from "firebase/firestore";
 
 const DUMMY_DATA = [
     {
@@ -38,6 +39,25 @@ const HomeScreen = () => {
     const navigation = useNavigation();
     const {user, logout} = useAuth();
     const swipeRef = useRef(null);
+    const [profiles, setProfiles] = useState([]);
+
+    useEffect(() => {
+        let unsub;
+
+        const fetchCards = async () => {
+            unsub = onSnapshot(collection(db,"clothes"),snapshot=>{
+                setProfiles(
+                    snapshot.docs.map(doc => ({
+                        id:doc.id,
+                        ...doc.data(),
+                    }))
+                    )
+            })
+        }
+
+        fetchCards();
+        return unsub;
+    },[])
 
     return (
         <SafeAreaView className="flex-1">
@@ -49,14 +69,15 @@ const HomeScreen = () => {
             </View>
 
             {/* Cards */}
-            <View className="-mt-6">
+            <View className="items-center">
                 <Swiper
                     ref={swipeRef}
-                    cards={DUMMY_DATA}
+                    cards={profiles}
                     stackSize={5}
                     cardIndex={0}
                     animateCardOpacity
                     disableBottomSwipe
+                    containerStyle={{backgroundColor:"transparent"}}
                     onSwipedLeft={()=>{
                         console.log('Swipe PASS')
                     }}
@@ -83,26 +104,41 @@ const HomeScreen = () => {
                                     color:"#4DEd30"
                                 }
                             }
+                        },
+                        top:{
+                            title:"CART",
+                            style:{
+                                label:{
+                                    color:"yellow",
+                                    alignSelf: 'flex-end',
+                                }
+                            }
                         }
                     }}
-                    renderCard={(card)=>(
-                        <View key={card.id} className="relative bg-white h-3/4 rounded-xl">
-                            <Image className="absolute top-0 h-full w-full rounded-xl" source={{uri: card.photoURL}}/>
+                    renderCard={(card)=> card ? (
+                        <View key={card.id} className="relative bg-white rounded-xl" style={styles.card}>
+                            <Image className="absolute top-0 aspect-square w-full rounded-t-xl" source={{uri: card.photoURL}}/>
                             
                             <View
                                 style={styles.cardShadow}
-                                className="absolute flex-row bottom-0 bg-white w-full 
-                                    justify-between items-center h-20 px-6 py-2 rounded-b-xl"
+                                className="flex-1 absolute flex-row bottom-0 bg-white w-full 
+                                    justify-between items-start px-6 py-4 rounded-b-xl"
                             >
-                                <View>
-                                    <Text className="text-x; font-bold">{card.clothingName} {card.size}</Text>
-                                    <Text>{card.condition}</Text>
+                                <View className="justify-center">
+                                    <Text className="text-xl font-bold">{card.clothing}</Text>
+                                    <Text className="text-zinc-400 text-lg">Size: {card.size}</Text>
+                                    <Text className="text-zinc-400 text-lg">Condition: {card.condition}</Text>
+                                    <Text className="text-zinc-400 mb-5 text-lg">Tags to put dogtags with labels</Text>
                                 </View>
                                 <Text className="text-2xl font-bold">${card.price}</Text>
                             </View>
                             
                         </View>
-                        
+                    ) : (
+                        <View className="relative bg-white h-3/4 rounded-xl justify-center items-center" style={styles.card}>
+                            <Text className="font-fold pb-5">No more listings</Text>
+                            
+                        </View>
                     )}
                 />
             </View>
@@ -136,6 +172,9 @@ export default HomeScreen
 
 // can only create shadow with styles (tailwind dont have)
 const styles = StyleSheet.create({
+    card:{
+        height: "65%",
+    },
     cardShadow:{
         shadowColor: "#000",
         shadowOffset:{

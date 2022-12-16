@@ -9,7 +9,7 @@ import { Icon } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import useAuth from "../hooks/useAuth";
-import { doc, updateDoc, setDoc } from "firebase/firestore";
+import { doc, updateDoc, setDoc, addDoc } from "firebase/firestore";
 import { db, storage } from "../firebase";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import * as ImagePicker from "expo-image-picker";
@@ -23,21 +23,21 @@ const AddClothesModal = () => {
   const [price, setPrice] = useState('');
   const [conditionValue, setConditionValue] = useState(null);
   const [condition, setCondition] = useState([
-    { label: "Brand new", value: "brandnew" },
-    { label: "Like new", value: "likenew" },
-    { label: "Slightly used", value: "slightlyused" },
-    { label: "Well used", value: "wellused" },
-    { label: "Very used", value: "veryused" },
+    { label: "Brand new", value: "Brand New" },
+    { label: "Like new", value: "Like New" },
+    { label: "Slightly used", value: "Slightly Used" },
+    { label: "Well used", value: "Well Used" },
+    { label: "Very used", value: "Very Used" },
   ]);
   const [sizeValue, setSizeValue] = useState(null);
   const [size, setSize] = useState([
-    { label: "XXS", value: "xxs" },
-    { label: "XS", value: "xs" },
-    { label: "S", value: "s" },
-    { label: "M", value: "m" },
-    { label: "L", value: "l" },
-    { label: "XL", value: "xl" },
-    { label: "XXL", value: "xxl" },
+    { label: "XXS", value: "XXS" },
+    { label: "XS", value: "XS" },
+    { label: "S", value: "S" },
+    { label: "M", value: "M" },
+    { label: "L", value: "L" },
+    { label: "XL", value: "XL" },
+    { label: "XXL", value: "XXL" },
   ]);
 
   const [openCondition, setOpenCondition] = useState(false);
@@ -69,16 +69,19 @@ const AddClothesModal = () => {
       setError('Size required');
       return;
     }
-    const docRef = doc(db,"clothes", clothingName)
     const url = await uploadImage()
-    setDoc(docRef,{
+    let obj = {
       clothing: clothingName,
       price: price,
       condition: conditionValue,
       size: sizeValue,
       user: user.email,
       photoURL: url
-    })
+    }
+    const userRef = doc(db,"users", user.uid, "listings",clothingName)
+    const clotheRef = doc(db,"clothes", clothingName)
+    setDoc(clotheRef,obj)
+    .then(setDoc(userRef, obj))     //adds the clothing object under user so that profile can call it
     .then(()=>{navigation.goBack()
     })
     .catch ((error)=>{setError(error)})
@@ -151,6 +154,7 @@ const AddClothesModal = () => {
           value={clothingName}
           onChangeText={(clothingName) => setClothingName(clothingName)}        
           autoCorrect={false}
+          autoCapitalize={true}
           placeholder="Name your clothing" 
         />
 
