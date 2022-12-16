@@ -12,7 +12,6 @@ import useAuth from "../hooks/useAuth";
 import AppContext from '../components/AppContext';
 import { Image } from 'react-native-elements';
 
-
 const ConfigureProfileScreenTags = () => {
 
   const [error, setError] = useState(null);
@@ -26,16 +25,17 @@ const ConfigureProfileScreenTags = () => {
   }
 
   return (
-    <SafeAreaView className="flex justify-center items-center flex-col gap-14" >
-       
-            <Text className="font-bold text-5xl pt-20  ">
-                Almost there u fcking chibai.
+    <SafeAreaView className="flex-1" >
+       <View className="p-4 mt-20">
+            <Text className="font-bold text-5xl">
+                Almost there!
             </Text>
-            <Text className=" font-bold text-lg  ">
+            <Text className="font-bold text-lg leading-loose mt-5">
                 Now, please select up to 3 tags that you are interested in!
             </Text>
-        
-        <View className = "flex justify center flex-row">
+        </View>
+
+        <View className = "flex-1 justify center flex-row">
             <TouchableOpacity className=" h-40 w-40 rounded-full bg-slate-600" >
                 <Image className="relative left-4 top-4 h-32 w-32" source={require('../assets/icons/t-shirt.png')} />
                 <Text className="relative text-center -top-20 font-semibold opacity-75" >Tees</Text>
@@ -49,6 +49,7 @@ const ConfigureProfileScreenTags = () => {
                 <Text className="relative text-center -top-12 font-semibold opacity-75" >Vintage</Text>
             </TouchableOpacity>
         </View>
+
         <View className = "flex justify center flex-row  " >
             <TouchableOpacity className=" h-40 w-40 rounded-full bg-slate-600" >
                 <Image className="relative left-4 top-4 h-32 w-32" source={require('../assets/icons/jeans.png')} />
@@ -82,13 +83,13 @@ const ConfigureProfileScreenTags = () => {
                 <View className= "relative  -top-60 h-40 w-40 rounded-full bg-black opacity-50" ></View>
             </TouchableOpacity>
         </View> 
-        <TouchableOpacity className=" bg-[#5b5b5b] w-5/6 p-4 rounded-2xl "
-        onPress={()=>{
-          }
-        }
-      >
-        <Text className="text-white text-center font-semibold">Continue</Text>
-      </TouchableOpacity>
+        <View className="flex items-center justify-center pt-5">
+            <TouchableOpacity className=" bg-[#5b5b5b] w-11/12 p-4 rounded-2xl "
+            onPress={()=>{}}
+            >
+                <Text className="text-white text-center font-semibold">Continue</Text>
+            </TouchableOpacity>
+        </View>
     </SafeAreaView>
   )
 }
