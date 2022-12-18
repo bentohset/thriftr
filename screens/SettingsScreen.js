@@ -35,7 +35,7 @@ const Settings = () => {
             </TouchableOpacity>
 
 
-            <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Tabs')}>
                 <Text className="flex-row pb-3 justify-between mx-4 space-x-2 font-bold text-xl">
                     Go Back
                 </Text>
