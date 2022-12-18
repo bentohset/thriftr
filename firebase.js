@@ -4,6 +4,9 @@ import firebase from 'firebase/compat/app';
 import { getAuth,createUserWithEmailAndPassword } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import 'firebase/compat/firestore';
+import 'firebase/compat/auth';
+
 //import * as admin from "firebase-admin";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -19,6 +22,9 @@ const firebaseConfig = {
   storageBucket: 'gs://thriftr-1e99d.appspot.com',
 };
 
+if (!firebase.apps.length){
+  firebase.initializeApp(firebaseConfig);
+}
 
 //require('dotenv').config
 

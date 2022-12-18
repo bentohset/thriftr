@@ -8,16 +8,15 @@ const Settings = () => {
     const {user, logout} = useAuth();
     const navigation = useNavigation()
 
-
+    //const user_email = user.email
 
     const changePassword = () => {
-        firebase.auth().sendPasswordResetEmail(firebase.auth().user.email)
+        firebase.auth().sendPasswordResetEmail(firebase.auth().currentUser.email)
         .then(() => {
             alert("password reset email sent")
         }).catch((error) => {
             alert(error)
         })
-        
     }
 
 
@@ -25,13 +24,13 @@ const Settings = () => {
         <SafeAreaView>
             <View className="flex-row pb-3 justify-between mx-4 space-x-2">
                 {/* Header with title and search bar */}
-                <Text className="font-bold text-3xl">
+                <Text className="font-bold text-3xl ">
                 Settings Page
                 </Text>
             </View>
             <TouchableOpacity onPress={() => {changePassword()}}>
-                <Text className="flex-row pb-3 justify-between mx-4 space-x-2">
-                    Send password change request (not done yet)
+                <Text className="flex-row pb-3 justify-between mx-4 space-x-2 font-bold text-xl">
+                    Send password change request
                 </Text>
             </TouchableOpacity>
 
