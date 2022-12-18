@@ -84,8 +84,8 @@ const ConfigureProfileScreenTags = () => {
             </TouchableOpacity>
         </View> 
         <View className="flex items-center justify-center pt-5">
-            <TouchableOpacity className=" bg-[#5b5b5b] w-11/12 p-4 rounded-2xl "
-            onPress={()=>{}}
+            <TouchableOpacity className=" bg-[#5b5b5b] w-11/12 p-4 rounded-2xl"
+             onPress={() => navigation.navigate('Tabs')}
             >
                 <Text className="text-white text-center font-semibold">Continue</Text>
             </TouchableOpacity>

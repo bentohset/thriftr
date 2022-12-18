@@ -135,7 +135,7 @@ const ProfileScreen = () => {
   return (
     
     <SafeAreaView className="">
-      <View className="flex-row pb-3 justify-between mx-4 space-x-2">
+      <View className="flex-row pb-3 justify-between mx-7 space-x-2">
         {/* Header with title and search bar */}
         <Text className="font-bold text-3xl">
         {(user.displayName != undefined)? user.displayName : user.email}
@@ -152,7 +152,7 @@ const ProfileScreen = () => {
 
       </View>
 
-      <View className="flex-row bottom-0 left-6">
+      <View className="flex-row bottom-0 left-7">
         {/* profile pic */}
         <TouchableOpacity 
           onPress={()=> console.log("press profile")}
@@ -209,14 +209,14 @@ const ProfileScreen = () => {
       </View>
 
       {/* full name */}
-      <View className="flex-row pb-3 items-center mx-4 space-x-2 top-2">
+      <View className="flex-row pb-3 items-center mx-7 space-x-2 top-2">
         <Text className="font-bold text-xl">
           full name
         </Text>
       </View>
 
       {/* bio */}
-      <View className="flex-row pb-3 items-center mx-4 space-x-2 bottom-1">
+      <View className="flex-row pb-3 items-center mx-7 space-x-2 bottom-1">
         <Text className="font-light text-sm">
           Hi! This is where i post all my clothes...
         </Text>

@@ -91,6 +91,7 @@ configurationState();
       .finally(() => setLoading(false));
   }
 
+  /*
   async function registerUser(email,password) {
     setEmail(email);
     setPassword(password);
@@ -109,6 +110,36 @@ configurationState();
       setLoading(false);
     }
   } 
+*/
+  async function registerUser(email, password) {
+    await firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then(() => {
+        firebase.auth().currentUser.sendEmailVerification({
+            handleCodeInApp: true,
+            url:'https://thriftr-1e99d.firebaseapp.com',
+        })
+        .then(() => {
+            alert('verification email sent')
+        })
+        .catch((error) => {
+            alert.apply(error.message)
+        })
+        .then(() => {
+            firebase.firestore().collection('users')
+            .doc(firebase.auth().currentUser.uid)
+            .set({
+                email: email,
+            })
+        })
+        .catch((error) => {
+            alert(error.message)
+        })
+    })
+    .catch((error) => {
+        alert(error.message)
+    })
+}
+
 
   const signInWithGoogle = async()=> promptAsync();
   useEffect(() => {

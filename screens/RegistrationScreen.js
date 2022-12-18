@@ -23,10 +23,8 @@ const Registration = () => {
     const {user, registerUser, loading, signInWithGoogle, configurationState} = useAuth();
     const navigation = useNavigation();
 
-    const [fontsLoaded] = useFonts({
-        'Poppins': require('../assets/fonts/Poppins-Regular.ttf'),
-      });
-
+    
+    
     async function registration() {
         if (email === '' || password === '') {
             setError('Email and password are required');
