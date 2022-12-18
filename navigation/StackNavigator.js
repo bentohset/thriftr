@@ -18,6 +18,7 @@ import BottomTabNavigator from './BottomTabNavigator';
 import AddClothesModal from './AddClothesModal';
 import ConfigureProfileScreenAge from '../screens/ConfigureProfileScreenAge';
 import ConfigureProfileScreenTags from '../screens/ConfigureProfileScreenTags';
+import SettingsScreen from '../screens/SettingsScreen'
 
 const Stack = createNativeStackNavigator();
 
@@ -40,6 +41,7 @@ const StackNavigator = () =>{
                 <Stack.Group screenOptions={{ headerShown: false, presentation: 'fullScreenModal', animationEnabled: false }}>
                   <Stack.Screen name="Tabs" component={BottomTabNavigator} />
                   <Stack.Screen name="AddClothesModal" component={AddClothesModal} options={{ animationEnabled: true }}/>
+                  <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
                 </Stack.Group>
               </>
               ):(

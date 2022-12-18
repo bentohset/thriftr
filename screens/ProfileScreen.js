@@ -2,20 +2,34 @@ import { View, Text, SafeAreaView, Button, TouchableOpacity, ScrollView } from '
 import React from 'react'
 import useAuth from '../hooks/useAuth';
 import { Icon } from '@rneui/themed';
+import { useNavigation } from "@react-navigation/native";
+
+
 
 
 const ProfileScreen = () => {
   const {user, logout} = useAuth();
   console.log(user)
+  const navigation = useNavigation()
 
   return (
+    
     <SafeAreaView className="">
-      {/* Header with title and search bar */}
-      <View className="flex-row pb-3 items-center mx-4 space-x-2">
+      <View className="flex-row pb-3 justify-between mx-4 space-x-2">
+        {/* Header with title and search bar */}
         <Text className="font-bold text-3xl">
-          {(user.displayName != undefined)? user.displayName : user.email}
+        {(user.displayName != undefined)? user.displayName : user.email}
         </Text>
-        {/* TODO: Search bar to be IMPLEMENTED */}
+
+        {/* Menu button */}
+        <TouchableOpacity 
+          onPress={() => navigation.navigate('SettingsScreen')}
+          className="items-right justify-center rounded-full w-10 h-15">
+            <View className="items-center justify-center">
+              <Icon name="menu" color="black" size="30"/>
+            </View>
+        </TouchableOpacity>
+
       </View>
 
       <View className="flex-row bottom-0 left-6">
@@ -173,22 +187,10 @@ const ProfileScreen = () => {
             
             </View>
         </TouchableOpacity>
-        
-        
-      
+  
       </View>
       </ScrollView>
-      
-      
-
-      <View className="flex justify-center items-center top-10">
-        <Text className="text-red-400">
-          Hello, {user?.uid}!
-        </Text>
-        <Button title="Sign out" className="mt-10" onPress={logout}/>
-      </View>
-
-
+   
     </SafeAreaView>
   )
 }
