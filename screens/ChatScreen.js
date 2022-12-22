@@ -1,5 +1,6 @@
-import { View, Text, SafeAreaView, Image} from 'react-native'
+import { View, Text, SafeAreaView, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
+//import Animated, { useSharedValue, useAnimatedStyle } from 'react-native-reanimated'
 
 const ChatScreen = () => {
   return (
@@ -9,10 +10,16 @@ const ChatScreen = () => {
         <Text className="font-bold text-3xl">
           Chats
         </Text>
-
-        {/* TODO: Search bar to be IMPLEMENTED */}
       </View>
-      {/* Chats list*/}
+      
+
+      <TouchableOpacity 
+          onPress={()=> console.log("press profile")}
+          className=" items-center justify-center border-black bg-stone-500 h-28 w-28">
+            <View className="items-center justify-center">
+            
+            </View>
+      </TouchableOpacity>
 
 
     </SafeAreaView>

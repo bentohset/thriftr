@@ -1,24 +1,158 @@
-import { View, Text, SafeAreaView, Button, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, SafeAreaView, Button, TouchableOpacity, ScrollView, FlatList, Image } from 'react-native'
 import React from 'react'
 import useAuth from '../hooks/useAuth';
 import { Icon } from '@rneui/themed';
+import { useNavigation } from "@react-navigation/native";
+
+
+const products = [
+  {
+      clothingName:"Shirt with stripes",
+      size: "XL",
+      price: 5,
+      condition:"unused",
+      photoURL:"https://github.com/twbs.png",
+      id: 1,
+  },
+  {
+      clothingName:"Buttoned Shirt",
+      size: "S",
+      price: 12,
+      condition:"used",
+      photoURL:"https://github.com/npm.png?size=200",
+      id: 2,
+  },
+  {
+      clothingName:"Shirt Oversized-fit",
+      size: "L",
+      price: 10,
+      condition:"Worn",
+      photoURL:"https://github.com/github.png?size=40",
+      id:3,
+  },
+  {
+    clothingName:"Shirt ",
+    size: "S",
+    price: 12,
+    condition:"Worn",
+    photoURL:"https://github.com/github.png?size=40",
+    id:4,
+  },
+  {
+    clothingName:"Shirt ",
+    size: "S",
+    price: 12,
+    condition:"Worn",
+    photoURL:"https://github.com/github.png?size=40",
+    id:5,
+  },
+  {
+    clothingName:"Shirt ",
+    size: "S",
+    price: 12,
+    condition:"Worn",
+    photoURL:"https://github.com/github.png?size=40",
+    id:6,
+  },
+  {
+    clothingName:"Shirt ",
+    size: "S",
+    price: 12,
+    condition:"Worn",
+    photoURL:"https://github.com/github.png?size=40",
+    id:7,
+  },
+  {
+    clothingName:"Shirt ",
+    size: "S",
+    price: 12,
+    condition:"Worn",
+    photoURL:"https://github.com/github.png?size=40",
+    id:8,
+  },
+  {
+    clothingName:"Shirt ",
+    size: "S",
+    price: 12,
+    condition:"Worn",
+    photoURL:"https://github.com/github.png?size=40",
+    id:4,
+  },
+  {
+    clothingName:"Shirt ",
+    size: "S",
+    price: 12,
+    condition:"Worn",
+    photoURL:"https://github.com/github.png?size=40",
+    id:9,
+  },
+  {
+    clothingName:"Shirt ",
+    size: "S",
+    price: 12,
+    condition:"Worn",
+    photoURL:"https://github.com/github.png?size=40",
+    id:10,
+  },
+  {
+    clothingName:"Shirt ",
+    size: "S",
+    price: 12,
+    condition:"Worn",
+    photoURL:"https://github.com/github.png?size=40",
+    id:11,
+  },
+  {
+    clothingName:"Shirt ",
+    size: "S",
+    price: 12,
+    condition:"Worn",
+    photoURL:"https://github.com/github.png?size=40",
+    id:12,
+  }
+];
+
+const Item = ({ title, image }) => (
+  <TouchableOpacity 
+    onPress={console.log(title)} 
+    className="items-center justify-center border-white border-2 h-28 w-28" >
+    <Image source={{uri: image}} style={{width:100, height:100}}/>
+  </TouchableOpacity>
+);
+
 
 
 const ProfileScreen = () => {
   const {user, logout} = useAuth();
   console.log(user)
+  const navigation = useNavigation()
+  const renderItem = ({ item }) => (
+    <Item 
+      title={item.clothingName} 
+      image={item.photoURL}/>
+  );
 
   return (
+    
     <SafeAreaView className="">
-      {/* Header with title and search bar */}
-      <View className="flex-row pb-3 items-center mx-4 space-x-2">
+      <View className="flex-row pb-3 justify-between mx-7 space-x-2">
+        {/* Header with title and search bar */}
         <Text className="font-bold text-3xl">
-          {(user.displayName != undefined)? user.displayName : user.email}
+        {(user.displayName != undefined)? user.displayName : user.email}
         </Text>
-        {/* TODO: Search bar to be IMPLEMENTED */}
+
+        {/* Menu button */}
+        <TouchableOpacity 
+          onPress={() => navigation.navigate('SettingsScreen')}
+          className="items-right justify-center rounded-full w-10 h-15">
+            <View className="items-center justify-center">
+              <Icon name="menu" color="black" size="30"/>
+            </View>
+        </TouchableOpacity>
+
       </View>
 
-      <View className="flex-row bottom-0 left-6">
+      <View className="flex-row bottom-0 left-7">
         {/* profile pic */}
         <TouchableOpacity 
           onPress={()=> console.log("press profile")}
@@ -75,14 +209,14 @@ const ProfileScreen = () => {
       </View>
 
       {/* full name */}
-      <View className="flex-row pb-3 items-center mx-4 space-x-2 top-2">
+      <View className="flex-row pb-3 items-center mx-7 space-x-2 top-2">
         <Text className="font-bold text-xl">
           full name
         </Text>
       </View>
 
       {/* bio */}
-      <View className="flex-row pb-3 items-center mx-4 space-x-2 bottom-1">
+      <View className="flex-row pb-3 items-center mx-7 space-x-2 bottom-1">
         <Text className="font-light text-sm">
           Hi! This is where i post all my clothes...
         </Text>
@@ -131,63 +265,15 @@ const ProfileScreen = () => {
       </View>
 
       {/* all clothes */}
-      <ScrollView className=" px-5 top-6 gap-1 h-3/6">
-      <View className="gap-1 flex-row grid-cols-3">
-        {/* clothes card */}
-        <TouchableOpacity 
-          onPress={()=> console.log("press profile")}
-          className=" items-center justify-center border-black bg-stone-300 h-28 w-28">
-            <View className="items-center justify-center">
-            
-            </View>
-        </TouchableOpacity>
-        {/* clothes card */}
-        <TouchableOpacity 
-          onPress={()=> console.log("press profile")}
-          className=" items-center justify-center border-black bg-stone-300 h-28 w-28">
-            <View className="items-center justify-center">
-            
-            </View>
-        </TouchableOpacity>
-        {/* clothes card */}
-        <TouchableOpacity 
-          onPress={()=> console.log("press profile")}
-          className=" items-center justify-center border-black bg-stone-300 h-28 w-28">
-            <View className="items-center justify-center">
-            
-            </View>
-        </TouchableOpacity>
-        {/* clothes card */}
-        <TouchableOpacity 
-          onPress={()=> console.log("press profile")}
-          className=" items-center justify-center border-black bg-stone-400 h-28 w-28">
-            <View className="items-center justify-center">
-            
-            </View>
-        </TouchableOpacity>
-        {/* clothes card */}
-        <TouchableOpacity 
-          onPress={()=> console.log("press profile")}
-          className=" items-center justify-center border-black bg-stone-500 h-28 w-28">
-            <View className="items-center justify-center">
-            
-            </View>
-        </TouchableOpacity>
-        
-        
-      
-      </View>
-      </ScrollView>
-      
-      
+      <View className="top-6 items-center mx-6 h-[450px]">
+      <FlatList
+        data={products}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+        numColumns={3}
 
-      <View className="flex justify-center items-center top-10">
-        <Text className="text-red-400">
-          Hello, {user?.uid}!
-        </Text>
-        <Button title="Sign out" className="mt-10" onPress={logout}/>
+      />
       </View>
-
 
     </SafeAreaView>
   )

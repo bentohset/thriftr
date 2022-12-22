@@ -116,6 +116,7 @@ const HomeScreen = () => {
                         }
                     }}
                     renderCard={(card)=> card ? (
+                        
                         <View key={card.id} className="relative bg-white rounded-xl" style={styles.card}>
                             <Image className="absolute top-0 aspect-square w-full rounded-t-xl" source={{uri: card.photoURL}}/>
                             
