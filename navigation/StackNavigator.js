@@ -36,21 +36,18 @@ const StackNavigator = () =>{
           }}
         >
           {user ? (
-            configState ? (
+           
               <>
                 <Stack.Group screenOptions={{ headerShown: false, presentation: 'fullScreenModal', animationEnabled: false }}>
                   <Stack.Screen name="Tabs" component={BottomTabNavigator} />
                   <Stack.Screen name="AddClothesModal" component={AddClothesModal} options={{ animationEnabled: true }}/>
                   <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
-                </Stack.Group>
-              </>
-              ):(
-              <>
-                <Stack.Screen name="ConfigureProfile" component={ConfigureProfileScreen} />
+                  <Stack.Screen name="ConfigureProfile" component={ConfigureProfileScreen} />
                 <Stack.Screen name="ConfigureProfileScreenAge" component={ConfigureProfileScreenAge} />
                 <Stack.Screen name="ConfigureProfileScreenTags" component={ConfigureProfileScreenTags} />
+                </Stack.Group>
             </>
-            )
+            
           ) : (
             <>
               <Stack.Screen name="GetStarted" component={GetStartedScreen} />

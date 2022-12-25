@@ -38,7 +38,7 @@ export const AuthProvider = ({children}) => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [configState, setConfigstate] = useState(false);
+
 
 
   useEffect(
@@ -61,23 +61,7 @@ export const AuthProvider = ({children}) => {
     []
   );
 
-  async function configurationState() {
-    if (user ){
-      //if user is logged in
-      const docRef = doc(db, "users", user.uid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setConfigstate(true);
-        console.log("exists")
-      }
-      else{
-        setConfigstate(false);
-        console.log("dun exists")
-      }
-      console.log(configState)
-  }}
-  
-configurationState();
+
 
 
 
@@ -173,8 +157,7 @@ configurationState();
       user,
       loading,
       error,
-      configState,
-      configurationState,
+    
       signInWithGoogle,      //added google sign in option
       registerUser,
       logout,

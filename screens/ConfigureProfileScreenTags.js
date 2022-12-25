@@ -344,7 +344,7 @@ const ConfigureProfileScreenTags = () => {
                 configTagArray();
                 configProfileTags();
                 setPressCount(0);
-                configurationState();
+                navigation.navigate('Home');
                 
             }}
             >

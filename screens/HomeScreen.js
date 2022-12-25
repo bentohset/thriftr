@@ -1,6 +1,6 @@
 import { View, Text ,Button, SafeAreaView, TouchableOpacity, Image, StyleSheet} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect , useRef, useState } from 'react'
+import React, { useEffect , useLayoutEffect, useRef, useState } from 'react'
 import { auth, firebase, db } from '../firebase';
 import useAuth from "../hooks/useAuth";
 import { signOut, getAuth } from 'firebase/auth';
@@ -35,11 +35,21 @@ const DUMMY_DATA = [
     }
 ];
 
-const HomeScreen = () => {
+const HomeScreen = () => {                          //configuation
     const navigation = useNavigation();
     const {user, logout} = useAuth();
     const swipeRef = useRef(null);
     const [profiles, setProfiles] = useState([]);
+
+   useLayoutEffect(
+    () =>
+    onSnapshot(doc(db,"users",user.uid),(snapshot) =>{
+        if (!snapshot.exists()){
+            navigation.navigate("ConfigureProfile")
+        }
+    }),
+    []
+   );     
 
     useEffect(() => {
         let unsub;
