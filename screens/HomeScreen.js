@@ -6,7 +6,7 @@ import useAuth from "../hooks/useAuth";
 import { signOut, getAuth } from 'firebase/auth';
 import { Icon } from '@rneui/themed';
 import Swiper from 'react-native-deck-swiper';
-import { doc, collection, onSnapshot, updateDoc, setDoc, addDoc } from "firebase/firestore";
+import { doc, collection, onSnapshot, updateDoc, setDoc, addDoc, query, where, getDocs,   } from "firebase/firestore";
 
 const DUMMY_DATA = [
     {
@@ -55,9 +55,47 @@ const HomeScreen = () => {                          //configuation
         let unsub;
 
         const fetchCards = async () => {
-            unsub = onSnapshot(collection(db,"clothes"),snapshot=>{
+
+            /*const passes = getDocs(collection(db, 'users', user.uid, 'passes')).then(
+                (snapshot) => snapshot.docs.map((doc) => doc.clothing)
+               
+            );  */ //retrives an snapshot of all the cards that are passed
+
+            const passes = [];
+            const likes = [];
+            const cart = [];
+             
+            await getDocs(collection(db,'users', user.uid, 'passes'))
+            .then(snapshot => {
+                snapshot.docs.forEach(doc => {
+                passes.push(doc.id)
+            })})  //alternative way to get passes, PAPAfam one doesnt work for me.
+
+            await getDocs(collection(db,'users', user.uid, 'likes'))
+            .then(snapshot => {
+                snapshot.docs.forEach(doc => {
+                likes.push(doc.id)
+                })})
+
+            await getDocs(collection(db,'users', user.uid, 'cart'))
+            .then(snapshot => {
+               snapshot.docs.forEach(doc => {
+               cart.push(doc.id)
+                })})
+
+            const passedcards = passes.length > 0 ? passes : ["test"]; //retrieves an arraqy of all the cards that are passed, if no passes then return ["test"]
+            const likedcards = likes.length > 0 ? likes : ["test"];
+            const cartcards = cart.length > 0 ? cart : ["test"];
+
+            unsub = onSnapshot(
+                query(
+                    collection(db,"clothes"), 
+                    where ("clothing", "not-in", [...passedcards, ...likedcards, ...cartcards])
+                    ),
+            (snapshot)=>{    //only quaries cards that user has not swiped on 
                 setProfiles(
-                    snapshot.docs.map(doc => ({
+                    snapshot.docs
+                    .map(doc => ({
                         id:doc.id,
                         ...doc.data(),
                     }))
@@ -68,6 +106,33 @@ const HomeScreen = () => {                          //configuation
         fetchCards();
         return unsub;
     },[])
+
+    const swipeLeft = (cardIndex) => {
+        if (!profiles[cardIndex]) return ;
+
+        const cardSwiped = profiles[cardIndex];
+        console.log(`You swiped Pass on ${cardSwiped.id}`);
+
+        setDoc(doc(db, 'users', user.uid, 'passes', cardSwiped.id ), cardSwiped);  //tracks the cards you swiped on db
+    };
+
+    const swipeRight = async(cardIndex) => {
+        if (!profiles[cardIndex]) return ;
+
+        const cardSwiped = profiles[cardIndex];
+        console.log(`You swiped like on ${cardSwiped.id}`);
+
+        setDoc(doc(db, 'users', user.uid, 'likes', cardSwiped.id ), cardSwiped);
+    }
+
+    const swipeTop = async(cardIndex) => {
+        if (!profiles[cardIndex]) return ;
+
+        const cardSwiped = profiles[cardIndex];
+        console.log(`You swiped cart on ${cardSwiped.id}`);
+
+        setDoc(doc(db, 'users', user.uid, 'cart', cardSwiped.id ), cardSwiped);
+    }
 
     return (
         <SafeAreaView className="flex-1">
@@ -88,14 +153,17 @@ const HomeScreen = () => {                          //configuation
                     animateCardOpacity
                     disableBottomSwipe
                     containerStyle={{backgroundColor:"transparent"}}
-                    onSwipedLeft={()=>{
+                    onSwipedLeft={(cardIndex)=>{
                         console.log('Swipe PASS')
+                        swipeLeft(cardIndex);
                     }}
-                    onSwipedRight={()=>{
+                    onSwipedRight={(cardIndex)=>{
                         console.log('Swipe LIKE')
+                        swipeRight(cardIndex);
                     }}
-                    onSwipedTop={()=>{
+                    onSwipedTop={(cardIndex)=>{
                         console.log('Swipe CART')
+                        swipeTop(cardIndex)
                     }}
                     overlayLabels={{
                         left:{
