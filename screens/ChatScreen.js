@@ -1,8 +1,32 @@
-import { View, Text, SafeAreaView, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { View, Text, SafeAreaView, Image, TouchableOpacity, Animated } from 'react-native'
+import React, {useState} from 'react'
+import LoadingButton from '../components/LoadingButton';
 //import Animated, { useSharedValue, useAnimatedStyle } from 'react-native-reanimated'
 
 const ChatScreen = () => {
+  const [loading, setLoading] = useState(false);
+  const [fadeAnim] = useState(new Animated.Value(0));
+
+  const startAnimation = () => {
+    Animated.timing(
+      fadeAnim,
+      {
+        toValue: 1,
+        duration: 500,
+      }
+    ).start();
+  };
+
+  const stopAnimation = () => {
+    Animated.timing(
+      fadeAnim,
+      {
+        toValue: 0,
+        duration: 500,
+      }
+    ).start();
+  };
+
   return (
     <SafeAreaView className="flex-1">
       {/* Header with title and search bar */}
@@ -20,6 +44,10 @@ const ChatScreen = () => {
             
             </View>
       </TouchableOpacity>
+
+      <View className="flex items-center mt-5">
+        <LoadingButton text="Test" onPress={()=> console.log("test button")}/>
+      </View>
 
 
     </SafeAreaView>
