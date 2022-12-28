@@ -13,6 +13,7 @@ import { doc, updateDoc, setDoc, addDoc } from "firebase/firestore";
 import { db, storage } from "../firebase";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import * as ImagePicker from "expo-image-picker";
+import LoadingButton from '../components/LoadingButton';
 
 const AddClothesModal = () => {
   const navigation = useNavigation();
@@ -239,14 +240,12 @@ const AddClothesModal = () => {
         </View>
       }
       <View className="flex items-center justify-center pt-5 border-t border-zinc-400">
-        <TouchableOpacity
-          className="bg-[#5b5b5b] w-11/12 p-4 rounded-2xl"
+        <LoadingButton
           onPress={()=>{
             submitForm();
           }}
-        >
-          <Text className="text-white text-center font-semibold">Add</Text>
-        </TouchableOpacity>
+          text="Add"
+        />
       </View>
       
     </SafeAreaView>
