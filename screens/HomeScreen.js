@@ -6,7 +6,8 @@ import useAuth from "../hooks/useAuth";
 import { signOut, getAuth } from 'firebase/auth';
 import { Icon } from '@rneui/themed';
 import Swiper from 'react-native-deck-swiper';
-import { doc, collection, onSnapshot, updateDoc, setDoc, addDoc, query, where, getDocs,   } from "firebase/firestore";
+import { doc, collection, onSnapshot, updateDoc, setDoc, addDoc, query, where, getDocs, getDoc,   } from "firebase/firestore";
+import generateId from '../lib/generateid';
 
 const DUMMY_DATA = [
     {
@@ -37,7 +38,7 @@ const DUMMY_DATA = [
 
 const HomeScreen = () => {                          //configuation
     const navigation = useNavigation();
-    const {user, logout} = useAuth();
+    const {user, logout, } = useAuth();
     const swipeRef = useRef(null);
     const [profiles, setProfiles] = useState([]);
 
@@ -64,6 +65,7 @@ const HomeScreen = () => {                          //configuation
             const passes = [];
             const likes = [];
             const cart = [];
+            const listings = [];
              
             await getDocs(collection(db,'users', user.uid, 'passes'))
             .then(snapshot => {
@@ -83,14 +85,21 @@ const HomeScreen = () => {                          //configuation
                cart.push(doc.id)
                 })})
 
+            await getDocs(collection(db,'users', user.uid, 'listings'))
+            .then(snapshot => {
+               snapshot.docs.forEach(doc => {
+               listings.push(doc.id)
+                })})
+
             const passedcards = passes.length > 0 ? passes : ["test"]; //retrieves an arraqy of all the cards that are passed, if no passes then return ["test"]
             const likedcards = likes.length > 0 ? likes : ["test"];
             const cartcards = cart.length > 0 ? cart : ["test"];
+            const listedcards = listings.length > 0 ? listings : ["test"];
 
             unsub = onSnapshot(
                 query(
                     collection(db,"clothes"), 
-                    where ("clothing", "not-in", [...passedcards, ...likedcards, ...cartcards])
+                    where ("clothing", "not-in", [...passedcards, ...likedcards, ...cartcards, ...listedcards])
                     ),
             (snapshot)=>{    //only quaries cards that user has not swiped on 
                 setProfiles(
@@ -129,9 +138,33 @@ const HomeScreen = () => {                          //configuation
         if (!profiles[cardIndex]) return ;
 
         const cardSwiped = profiles[cardIndex];
+        const buyerProfile = await (
+            await getDoc(doc(db, "users", user.uid))
+        ).data();
+
+        const sellerProfile = await (
+            await getDoc(doc(db, "users", cardSwiped.user))
+        ).data();
+        
+        
+
+
         console.log(`You swiped cart on ${cardSwiped.id}`);
 
         setDoc(doc(db, 'users', user.uid, 'cart', cardSwiped.id ), cardSwiped);
+        setDoc(doc(db, 'cart', generateId(user.uid, cardSwiped.id)),{
+            users:{
+               [user.uid]: buyerProfile,
+               [cardSwiped.user]: sellerProfile
+            },
+
+            clothingArticle:{
+                [cardSwiped.id]: cardSwiped
+            }
+
+        }
+        
+        )
     }
 
     return (

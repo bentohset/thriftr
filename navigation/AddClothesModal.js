@@ -75,7 +75,7 @@ const AddClothesModal = () => {
       price: price,
       condition: conditionValue,
       size: sizeValue,
-      user: user.email,
+      user: user.uid,
       photoURL: url
     }
     const userRef = doc(db,"users", user.uid, "listings",clothingName)

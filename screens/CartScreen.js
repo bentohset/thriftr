@@ -10,8 +10,9 @@ const CartScreen = () => {
           Cart
         </Text>
         {/* TODO: Search bar to be IMPLEMENTED */}
-      </View>
 
+      </View>
+      <ChatList/>
       {/* Chats list*/}
 
 
