@@ -245,6 +245,7 @@ const AddClothesModal = () => {
             submitForm();
           }}
           text="Add"
+          requirements={clothingName && price && conditionValue && size}
         />
       </View>
       

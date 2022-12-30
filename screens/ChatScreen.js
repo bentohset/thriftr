@@ -27,6 +27,10 @@ const ChatScreen = () => {
     ).start();
   };
 
+  const test = () => {
+    console.log('testing');
+  }
+
   return (
     <SafeAreaView className="flex-1">
       {/* Header with title and search bar */}
@@ -46,7 +50,7 @@ const ChatScreen = () => {
       </TouchableOpacity>
 
       <View className="flex items-center mt-5">
-        <LoadingButton text="Test" onPress={()=> console.log("test button")}/>
+        <LoadingButton text="Test" onPress={test}/>
       </View>
 
 
