@@ -239,8 +239,10 @@ const AddClothesModal = () => {
           </Text>
         </View>
       }
+      
       <View className="flex items-center justify-center pt-5 border-t border-zinc-400">
         <LoadingButton
+          classStyle="w-11/12 p-4 rounded-2xl items-center justify-center"
           onPress={()=>{
             submitForm();
           }}

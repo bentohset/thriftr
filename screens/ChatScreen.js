@@ -50,7 +50,7 @@ const ChatScreen = () => {
       </TouchableOpacity>
 
       <View className="flex items-center mt-5">
-        <LoadingButton text="Test" onPress={test}/>
+        <LoadingButton classStyle="w-11/12 p-4 rounded-2xl items-center justify-center" text="Test" onPress={test} requirements={true}/>
       </View>
 
 

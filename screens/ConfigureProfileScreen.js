@@ -11,6 +11,7 @@ import { db } from "../firebase";
 import useAuth from "../hooks/useAuth";
 import useDocExists from '../hooks/useDocExists';
 import AppContext from '../components/AppContext';
+import LoadingButton from '../components/LoadingButton';
 
 const ConfigureProfileScreen = () => {
   const [fullName, setFullName] = useState('');
@@ -48,7 +49,8 @@ const ConfigureProfileScreen = () => {
           </Text>
         </View>
       }
-      <View className="p-4 mt-20">
+
+      <View className="p-8 mt-20">
         <Text className="font-bold text-5xl leading-loose">
           You're In!
         </Text>
@@ -58,10 +60,10 @@ const ConfigureProfileScreen = () => {
         </Text>
       </View>
 
-      <View className="flex-1 items-start p-2 pr-8 m-1 mt-10">
+      <View className="flex-1 items-start p-6 pr-6 m-1 mt-10">
         <Text className="font-semibold m-1">Full Name</Text>
         <TextInput 
-          className="bg-[#D9D9D9] w-full h-12 m-2 p-4 rounded-xl"
+          className="bg-[#D9D9D9] w-full h-12 my-2 p-4 rounded-xl"
           value={fullName} 
           onChangeText={(fullName) => setFullName(fullName)} 
           autoCorrect={false}
@@ -70,25 +72,23 @@ const ConfigureProfileScreen = () => {
         <Text className="font-semibold m-1">Username</Text>
         <TextInput 
           placeholder="Username" 
-          className="bg-[#D9D9D9] w-full h-12 m-2 p-4 rounded-xl"
+          className="bg-[#D9D9D9] w-full h-12 my-2 p-4 rounded-xl"
           value={userName} 
           onChangeText={(userName) => setUserName(userName)} 
           autoCorrect={false}
           autoCapitalize={false}
         />
       </View>
-      <View className="flex items-center justify-center p-4">
-        <TouchableOpacity
-          className="bg-[#5b5b5b] w-full p-4 rounded-2xl"
+      <View className="flex items-center justify-center px-7 mb-4">
+        <LoadingButton
+          classStyle="w-full p-4 rounded-2xl"
           onPress={()=>{
             configProfileName();
             
           }}
-        >
-          <Text className="text-white text-center font-semibold">
-            Continue
-          </Text>
-        </TouchableOpacity>
+          text="Continue"
+          requirements={fullName && userName}
+        />
         {/* <Text className="font-semibold underline text-center mt-4" onPress={()=>navigation.navigate('Home')}>
           Skip
         </Text> */}

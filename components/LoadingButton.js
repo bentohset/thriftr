@@ -11,6 +11,7 @@
         - text: accepts a string of text to display on touchableopacity
         - requirements: (specifically for forms for now) disables button if requirements are not met
             eg. requirements={name && size && age && ...} ie. inputs that useState(null)
+        - clasStyle: basically className for customizing the sizing (DONT INCLUDE BG color)
 
     example:
         <LoadingButton
@@ -26,7 +27,7 @@ import { View, Text, ActivityIndicator, TouchableOpacity, StyleSheet  } from 're
 import React, {useState} from 'react'
 import { DotIndicator } from 'react-native-indicators'
 
-const LoadingButton = ({ text, onPress, requirements }) => {
+const LoadingButton = ({ text, onPress, requirements, classStyle }) => {
     const [loading, setLoading] = useState(false);
     const req = requirements ? true : false;        //if requirements are null, req is false (for forms - if inputs are not filled, disables button)
 
@@ -39,7 +40,7 @@ const LoadingButton = ({ text, onPress, requirements }) => {
   return (
     <TouchableOpacity
         style={loading ? styles.buttonLoading : styles.button}
-        className="w-11/12 p-4 rounded-2xl"
+        className={classStyle}
         disabled={loading || !req}      //disables button
         onPress={()=>{
             pressFunc();
