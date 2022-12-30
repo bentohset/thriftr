@@ -4,7 +4,7 @@ import { DotIndicator } from 'react-native-indicators'
 
 const LoadingButton = ({ text, onPress, requirements }) => {
     const [loading, setLoading] = useState(false);
-    const req = requirements ? true : false;
+    const req = requirements ? true : false;        //if requirements are null, req is false (for forms - if inputs are not filled, disables button)
 
     async function pressFunc(){
         setLoading(true);
@@ -15,7 +15,7 @@ const LoadingButton = ({ text, onPress, requirements }) => {
     <TouchableOpacity
         style={loading ? styles.buttonLoading : styles.button}
         className="w-11/12 p-4 rounded-2xl"
-        disabled={loading || !req}
+        disabled={loading || !req}      //disables button if requirements are not met or if its loading upon press
         onPress={()=>{
             pressFunc();
             console.log(req);
