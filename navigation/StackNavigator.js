@@ -25,42 +25,35 @@ const Stack = createNativeStackNavigator();
 const StackNavigator = () =>{
   const { user, configState } = useAuth();
 
-  
-    return(
-      //TODO: only direct to configureprofile screen if user username and fullname is not configured
-      //<Stack.Screen name="ConfigureProfile" component={ConfigureProfileScreen} />
+  return(
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      {user ? (  
+        <>
+          <Stack.Group screenOptions={{ headerShown: false, presentation: 'fullScreenModal', animationEnabled: false }}>
+            <Stack.Screen name="Tabs" component={BottomTabNavigator} />
+            <Stack.Screen name="AddClothesModal" component={AddClothesModal} options={{ animationEnabled: true }}/>
+            <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
+            <Stack.Screen name="ConfigureProfile" component={ConfigureProfileScreen} />
+            <Stack.Screen name="ConfigureProfileScreenAge" component={ConfigureProfileScreenAge} />
+            <Stack.Screen name="ConfigureProfileScreenTags" component={ConfigureProfileScreenTags} />
 
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          {user ? (
-           
-              <>
-                <Stack.Group screenOptions={{ headerShown: false, presentation: 'fullScreenModal', animationEnabled: false }}>
-                  <Stack.Screen name="Tabs" component={BottomTabNavigator} />
-                  <Stack.Screen name="AddClothesModal" component={AddClothesModal} options={{ animationEnabled: true }}/>
-                  <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
-                  <Stack.Screen name="ConfigureProfile" component={ConfigureProfileScreen} />
-                <Stack.Screen name="ConfigureProfileScreenAge" component={ConfigureProfileScreenAge} />
-                <Stack.Screen name="ConfigureProfileScreenTags" component={ConfigureProfileScreenTags} />
-                </Stack.Group>
-            </>
-            
-          ) : (
-            <>
-              <Stack.Screen name="GetStarted" component={GetStartedScreen} />
-              <Stack.Screen name="Login" component={LoginScreen} />
-              <Stack.Screen name="Registration" component = {RegistrationScreen} />
-              <Stack.Screen name = "ForgetPassword" component = {ForgetPasswordScreen}/>
-              
-            </>
-          )}
-        </Stack.Navigator>
-
-    )
-    
+          </Stack.Group>
+        </>
+      ) : (
+        <>
+          <Stack.Screen name="GetStarted" component={GetStartedScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Registration" component = {RegistrationScreen} />
+          <Stack.Screen name = "ForgetPassword" component = {ForgetPasswordScreen}/>
+          
+        </>
+      )}
+    </Stack.Navigator>
+  )
 }
 
 export default StackNavigator;
