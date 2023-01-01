@@ -50,7 +50,7 @@ const LoadingButton = ({ text, onPress, requirements, classStyle }) => {
         {loading ? (
             <DotIndicator size={5} count={3} color="white" />
         ) : (
-            <Text className="text-white text-center font-semibold">{text}</Text>
+            <Text className="text-white text-center font-bold">{text}</Text>
         )}
     </TouchableOpacity>
   )
@@ -58,7 +58,7 @@ const LoadingButton = ({ text, onPress, requirements, classStyle }) => {
 
 const styles = StyleSheet.create({
     button: {
-      backgroundColor: '#5b5b5b',
+      backgroundColor: '#39C7A5',
       height: 50
     },
     buttonLoading: {

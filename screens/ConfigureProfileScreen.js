@@ -63,7 +63,7 @@ const ConfigureProfileScreen = () => {
       <View className="flex-1 items-start p-6 pr-6 m-1 mt-10">
         <Text className="font-semibold m-1">Full Name</Text>
         <TextInput 
-          className="bg-[#D9D9D9] w-full h-12 my-2 p-4 rounded-xl"
+          className="border-2 border-[#DADADA] bg-transparent w-full h-14 my-2 p-4 rounded-xl"
           value={fullName} 
           onChangeText={(fullName) => setFullName(fullName)} 
           autoCorrect={false}
@@ -72,7 +72,7 @@ const ConfigureProfileScreen = () => {
         <Text className="font-semibold m-1">Username</Text>
         <TextInput 
           placeholder="Username" 
-          className="bg-[#D9D9D9] w-full h-12 my-2 p-4 rounded-xl"
+          className="border-2 border-[#DADADA] bg-transparent w-full h-14 my-2 p-4 rounded-xl"
           value={userName} 
           onChangeText={(userName) => setUserName(userName)} 
           autoCorrect={false}
@@ -81,7 +81,7 @@ const ConfigureProfileScreen = () => {
       </View>
       <View className="flex items-center justify-center px-7 mb-4">
         <LoadingButton
-          classStyle="w-full p-4 rounded-2xl"
+          classStyle="w-full p-4 rounded-2xl justify-center items-center"
           onPress={()=>{
             configProfileName();
             

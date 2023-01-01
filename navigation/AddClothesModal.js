@@ -129,7 +129,7 @@ const AddClothesModal = () => {
   
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 bg-white">
       <View className="p-3 align-center">
         <TouchableOpacity
           className="absolute top-1 left-3 p-3 rounded-xl z-10"
@@ -151,7 +151,7 @@ const AddClothesModal = () => {
       <View className="flex-1 flex-col items-start p-2 pr-8 m-1 mt-0">
         <Text className="font-semibold m-1 text-xl">Clothing Name</Text>
         <TextInput 
-          className="bg-[#D9D9D9] w-full h-12 m-2 p-4 rounded-xl"
+          className="border-2 border-[#DADADA] bg-transparent w-full h-14 m-2 p-4 rounded-xl"
           value={clothingName}
           onChangeText={(clothingName) => setClothingName(clothingName)}        
           autoCorrect={false}
@@ -162,7 +162,7 @@ const AddClothesModal = () => {
         <Text className="font-semibold m-1 text-xl">Condition</Text>
         <DropDownPicker
           props={{activeOpacity:1}}
-          className="w-full h-12 rounded-xl m-2"
+          className="w-full h-14 rounded-xl m-2"
           style={styles.drop}
           open={openCondition}
           setOpen={setOpenCondition}
@@ -181,7 +181,7 @@ const AddClothesModal = () => {
         />
       
         <Text className="font-semibold m-1 text-xl">Price</Text>
-        <View className="bg-[#D9D9D9] w-full h-12 m-2 p-4 rounded-xl flex-row items-center">
+        <View className="border-2 border-[#DADADA] bg-transparent w-full h-14 m-2 p-4 rounded-xl flex-row items-center">
           <Text className="font-semibold pr-1">S$</Text>
           <TextInput 
             className="w-full"
@@ -199,7 +199,7 @@ const AddClothesModal = () => {
         <DropDownPicker
           props={{activeOpacity:1}}
           style={styles.drop}
-          className="w-full h-12 rounded-xl m-2"
+          className="w-full h-14 rounded-xl m-2"
           open={openSize}
           setOpen={setOpenSize}
           value={sizeValue}
@@ -219,7 +219,7 @@ const AddClothesModal = () => {
         <Text className="font-semibold m-1 text-xl">Photo</Text>
         <TouchableWithoutFeedback onPress={pickImage} className="">
           {image===null ?  
-          <View className="w-full aspect-square bg-[#D9D9D9] rounded-xl m-2 p-4 border-box flex items-center justify-center">
+          <View className="w-full aspect-square border-2 border-[#DADADA] bg-transparent rounded-xl m-2 p-4 border-box flex items-center justify-center">
             <Icon type="octicon" name="plus" color="gray"/>
           </View>
           :
@@ -263,14 +263,16 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   dropDown:{
-    borderWidth: 0,
-    backgroundColor: "#D9D9D9",
+    borderWidth: 2,
+    borderColor: "#DADADA",
+    backgroundColor: "white",
     margin: 8,
     borderRadius: 5,
   },
   drop:{
-    backgroundColor: "#D9D9D9",
-    borderWidth: 0,
+    backgroundColor: "transparent",
+    borderWidth: 2,
+    borderColor: "#DADADA",
     margin: 0,
   },
   textDrop:{

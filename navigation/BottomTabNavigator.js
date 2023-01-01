@@ -23,7 +23,7 @@ const BottomTabNavigator = () => {
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarActiveTintColor: '#000',
+        tabBarActiveTintColor: '#39C7A5',
       }}
     >
         <Tab.Screen name="Home" component={HomeStack}
@@ -49,7 +49,9 @@ const BottomTabNavigator = () => {
           })}
           options={{
             tabBarIcon: ({focused, color, size})=>(
-              <Icon type="octicon" name="plus" color={color} size={size}/>
+              <View className="rounded-xl bg-[#BFEDE3] w-10 h-8 items-center justify-center">
+                <Icon type="octicon" name="plus" color="#39C7A5" size={size}/>
+              </View>
             ),
           }}
         />

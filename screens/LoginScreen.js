@@ -51,7 +51,7 @@ const LoginScreen = () => {
 
       <Text className="right-1/3 font-semibold">Your Email</Text>
       <TextInput
-        className="bg-[#D9D9D9] w-5/6 h-12 m-4 p-4 rounded-xl"
+        className="bg-transparent w-5/6 h-12 m-4 p-4 rounded-xl border-2 border-[#DADADA]"
         placeholder="example@mail.com" 
         value={email} 
         onChangeText={(email) => setEmail(email)} 
@@ -62,8 +62,8 @@ const LoginScreen = () => {
 
       <Text className="right-1/3 font-semibold">Password</Text>
       <TextInput 
-        className="bg-[#D9D9D9] w-5/6 h-12 m-4 p-4 rounded-xl"
-        placeholder="Password" 
+        className="bg-transparent w-5/6 h-12 m-4 p-4 rounded-xl border-2 border-[#DADADA]"
+        placeholder="password" 
         value={password} 
         onChangeText={(password) => setPassword(password)} 
         autoCapitalize="none" 
@@ -73,7 +73,7 @@ const LoginScreen = () => {
       <View className="flex flex-col w-full items-center absolute bottom-10">
         <LoadingButton
           onPress={logIn}
-          classStyle="w-5/6 p-4 rounded-2xl"
+          classStyle="w-5/6 p-4 rounded-2xl items-center justify-center"
           text="Sign in"
           requirements={email && password}
         />
@@ -81,10 +81,10 @@ const LoginScreen = () => {
           onPress={()=>{
             signInWithGoogle();
           }}
-          className="mt-2 flex flex-row items-center justify-center bg-transparent w-5/6 p-4 rounded-2xl border border-[#5B5B5B]"
+          className="mt-2 flex flex-row items-center justify-center bg-transparent w-5/6 p-4 rounded-2xl border border-[#39C7A5]"
         >
-          <Icon className="p-0" size={16} type="antdesign" name="google"/>
-          <Text className="text-[#5B5B5B] text-center font-semibold">Continue with Google</Text>
+          <Icon className="p-0" size={16} type="antdesign" name="google" color="#39C7A5"/>
+          <Text className="text-[#39C7A5] text-center font-bold">Continue with Google</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

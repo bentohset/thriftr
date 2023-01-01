@@ -63,7 +63,7 @@ const ConfigureProfileScreenAge = () => {
   }
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 bg-white">
       {!!error && 
         <View 
           className="absolute top-72 opacity-90 z-10 p-4 bg-[#D54826FF] rounded-2xl"
@@ -88,7 +88,7 @@ const ConfigureProfileScreenAge = () => {
         </Text>
         <DropDownPicker
           props={{activeOpacity:1}}
-          className="w-full h-12 rounded-xl my-2 p-4"
+          className="w-full h-14 rounded-xl my-2 p-4"
           style={styles.drop}
           placeholderStyle={styles.placeholderStyle}
           dropDownContainerStyle={styles.dropDown}
@@ -110,7 +110,7 @@ const ConfigureProfileScreenAge = () => {
         </Text>
         <DropDownPicker
           props={{activeOpacity:1}}
-          className="w-full h-12 rounded-xl my-2 p-4"
+          className="w-full h-14 rounded-xl my-2 p-4"
           style={styles.drop}
           placeholderStyle={styles.placeholderStyle}
           dropDownContainerStyle={styles.dropDown}
@@ -154,14 +154,16 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   dropDown:{
-    borderWidth: 0,
-    backgroundColor: "#D9D9D9",
+    borderWidth: 2,
+    borderColor: "#DADADA",
+    backgroundColor: "white",
     margin: 0,
     borderRadius: 5,
   },
   drop:{
-    backgroundColor: "#D9D9D9",
-    borderWidth: 0,
+    borderColor: "#DADADA",
+    backgroundColor: "transparent",
+    borderWidth: 2,
     margin: 0,
   },
   textDrop:{
