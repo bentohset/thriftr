@@ -149,7 +149,7 @@ const AddClothesModal = () => {
       contentContainerStyle={styles.contentContainer}
     >
       <View className="flex-1 flex-col items-start p-2 pr-8 m-1 mt-0">
-        <Text className="font-semibold m-1 text-xl">Clothing Name</Text>
+        <Text className="font-semibold m-1">Clothing Name</Text>
         <TextInput 
           className="border-2 border-[#DADADA] bg-transparent w-full h-14 m-2 p-4 rounded-xl"
           value={clothingName}
@@ -159,7 +159,7 @@ const AddClothesModal = () => {
           placeholder="Name your clothing" 
         />
 
-        <Text className="font-semibold m-1 text-xl">Condition</Text>
+        <Text className="font-semibold m-1">Condition</Text>
         <DropDownPicker
           props={{activeOpacity:1}}
           className="w-full h-14 rounded-xl m-2"
@@ -180,7 +180,7 @@ const AddClothesModal = () => {
           listMode="SCROLLVIEW"
         />
       
-        <Text className="font-semibold m-1 text-xl">Price</Text>
+        <Text className="font-semibold m-1">Price</Text>
         <View className="border-2 border-[#DADADA] bg-transparent w-full h-14 m-2 p-4 rounded-xl flex-row items-center">
           <Text className="font-semibold pr-1">S$</Text>
           <TextInput 
@@ -195,7 +195,7 @@ const AddClothesModal = () => {
         />
         </View>
 
-        <Text className="font-semibold m-1 text-xl">Size</Text>
+        <Text className="font-semibold m-1">Size</Text>
         <DropDownPicker
           props={{activeOpacity:1}}
           style={styles.drop}
@@ -216,7 +216,7 @@ const AddClothesModal = () => {
           listMode="SCROLLVIEW"
         />
 
-        <Text className="font-semibold m-1 text-xl">Photo</Text>
+        <Text className="font-semibold m-1">Photo</Text>
         <TouchableWithoutFeedback onPress={pickImage} className="">
           {image===null ?  
           <View className="w-full aspect-square border-2 border-[#DADADA] bg-transparent rounded-xl m-2 p-4 border-box flex items-center justify-center">
