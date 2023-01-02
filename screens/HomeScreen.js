@@ -160,12 +160,15 @@ const HomeScreen = () => {                          //configuation
 
             clothingArticle:{
                 [cardSwiped.id]: cardSwiped
-            }
+            },
 
-        }
+             buyerID: [user.uid],
+             sellerID: [cardSwiped.user]
+
+
+        })}
         
-        )
-    }
+
 
     return (
         <SafeAreaView className="flex-1">

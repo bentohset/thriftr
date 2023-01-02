@@ -1,5 +1,6 @@
 import { View, Text, SafeAreaView } from 'react-native'
 import React from 'react'
+import CartList from './CartList'
 
 const CartScreen = () => {
   return (
@@ -12,7 +13,7 @@ const CartScreen = () => {
         {/* TODO: Search bar to be IMPLEMENTED */}
 
       </View>
-      <ChatList/>
+      <CartList/>
       {/* Chats list*/}
 
 
