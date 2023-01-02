@@ -226,20 +226,18 @@ const ProfileScreen = () => {
         {/* edit profile button */}
         <TouchableOpacity 
           onPress={()=> console.log("press profile")}
-          className="basis-9/12 items-center justify-center rounded-md border-black bg-stone-300">
-            <View className="items-center justify-center">
-              <Text>
-                edit profile
-              </Text>
-            </View>
+          className="basis-9/12 items-center justify-center rounded-md bg-[#39C7A5]">
+            <Text className="text-white font-semibold">
+              edit profile
+            </Text>
         </TouchableOpacity>
 
         {/* share button */}
         <TouchableOpacity 
           onPress={()=> console.log("press profile")}
-          className="basis-1/12 items-center justify-center left-3 rounded-md bg-stone-300">
+          className="basis-1/12 items-center justify-center left-3 rounded-md bg-[#39C7A5]">
             <View className="items-center justify-center">
-            <Icon name="reply" color="black" size="20"/>
+              <Icon name="reply" color="white" size="20"/>
             </View>
         </TouchableOpacity>
       </View>
@@ -250,7 +248,7 @@ const ProfileScreen = () => {
           onPress={()=> console.log("press profile")}
           className="items-center justify-center">
             <View className="items-center justify-center">
-            <Icon name="ios-shirt-outline" type="ionicon" size="25"/>
+              <Icon name="ios-shirt-outline" type="ionicon" size="25"/>
             </View>
         </TouchableOpacity>
 

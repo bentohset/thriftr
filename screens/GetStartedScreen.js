@@ -3,7 +3,7 @@ Get started screen
 for users who just installed the app
 for onboarding
 */
-import { View, Text, TouchableOpacity} from 'react-native'
+import { View, Text, TouchableOpacity, Image} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import React, { useLayoutEffect } from 'react';
 import { useFonts, Inter_900Black } from '@expo-google-fonts/inter';
@@ -21,16 +21,16 @@ const GetStartedScreen = () => {
     
     return (
         <View className="flex-1 flex-col items-center justify-center">
-            <Text className="font-bold text-3xl text-[#444] p-2.5">Thriftr</Text>
-            <Text className="p-2.5 text-[#6A6A6A] text-xl">Find your fit today</Text>
+            <Image style={{height:85, width:125}} resizeMode="cover" source={require('../assets/designs/thriftrlogo_green.png')}/>
+            <Text className="p-2.5 font-semibold text-lg">Find your fit today</Text>
             <TouchableOpacity
                 onPress={()=>navigation.navigate('Registration')}
-                className="absolute bottom-24 bg-[#5b5b5b] w-5/6 p-4 rounded-2xl"
+                className="absolute bottom-24 bg-[#39C7A5] w-5/6 p-4 rounded-2xl"
             >
                 <Text className="text-white text-center font-semibold">Get started</Text>
             </TouchableOpacity>
-            <View className="flex-1 absolute bottom-16 text-[#444]">
-                <Text>Already have an account? <Text className="font-semibold underline" onPress={()=>navigation.navigate('Login')}>Log in</Text></Text>
+            <View className="flex-1 absolute bottom-16">
+                <Text className="font-semibold">Already have an account? <Text className="font-semibold underline text-[#39C7A5]" onPress={()=>navigation.navigate('Login')}>Log in</Text></Text>
             </View> 
         </View>
     )

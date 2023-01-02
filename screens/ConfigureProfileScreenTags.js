@@ -339,7 +339,7 @@ const ConfigureProfileScreenTags = () => {
             </TouchableOpacity>
         </View> 
         <View className="flex items-center justify-center pt-5">
-            <TouchableOpacity className=" bg-[#5b5b5b] w-11/12 p-4 rounded-2xl "
+            <TouchableOpacity className=" bg-[#39C7A5] w-11/12 p-4 rounded-2xl "
             onPress={()=>{
                 configTagArray();
                 configProfileTags();
@@ -348,7 +348,7 @@ const ConfigureProfileScreenTags = () => {
                 
             }}
             >
-                <Text className="text-white text-center font-semibold">Continue</Text>
+                <Text className="text-white text-center font-bold">Continue</Text>
             </TouchableOpacity>
         </View>
     </SafeAreaView>

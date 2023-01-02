@@ -13,6 +13,7 @@ import { doc, updateDoc, setDoc, addDoc } from "firebase/firestore";
 import { db, storage } from "../firebase";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import * as ImagePicker from "expo-image-picker";
+import LoadingButton from '../components/LoadingButton';
 
 const AddClothesModal = () => {
   const navigation = useNavigation();
@@ -128,7 +129,7 @@ const AddClothesModal = () => {
   
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 bg-white">
       <View className="p-3 align-center">
         <TouchableOpacity
           className="absolute top-1 left-3 p-3 rounded-xl z-10"
@@ -148,9 +149,9 @@ const AddClothesModal = () => {
       contentContainerStyle={styles.contentContainer}
     >
       <View className="flex-1 flex-col items-start p-2 pr-8 m-1 mt-0">
-        <Text className="font-semibold m-1 text-xl">Clothing Name</Text>
+        <Text className="font-semibold m-1">Clothing Name</Text>
         <TextInput 
-          className="bg-[#D9D9D9] w-full h-12 m-2 p-4 rounded-xl"
+          className="border-2 border-[#DADADA] bg-transparent w-full h-14 m-2 p-4 rounded-xl"
           value={clothingName}
           onChangeText={(clothingName) => setClothingName(clothingName)}        
           autoCorrect={false}
@@ -158,10 +159,10 @@ const AddClothesModal = () => {
           placeholder="Name your clothing" 
         />
 
-        <Text className="font-semibold m-1 text-xl">Condition</Text>
+        <Text className="font-semibold m-1">Condition</Text>
         <DropDownPicker
           props={{activeOpacity:1}}
-          className="w-full h-12 rounded-xl m-2"
+          className="w-full h-14 rounded-xl m-2"
           style={styles.drop}
           open={openCondition}
           setOpen={setOpenCondition}
@@ -179,8 +180,8 @@ const AddClothesModal = () => {
           listMode="SCROLLVIEW"
         />
       
-        <Text className="font-semibold m-1 text-xl">Price</Text>
-        <View className="bg-[#D9D9D9] w-full h-12 m-2 p-4 rounded-xl flex-row items-center">
+        <Text className="font-semibold m-1">Price</Text>
+        <View className="border-2 border-[#DADADA] bg-transparent w-full h-14 m-2 p-4 rounded-xl flex-row items-center">
           <Text className="font-semibold pr-1">S$</Text>
           <TextInput 
             className="w-full"
@@ -194,11 +195,11 @@ const AddClothesModal = () => {
         />
         </View>
 
-        <Text className="font-semibold m-1 text-xl">Size</Text>
+        <Text className="font-semibold m-1">Size</Text>
         <DropDownPicker
           props={{activeOpacity:1}}
           style={styles.drop}
-          className="w-full h-12 rounded-xl m-2"
+          className="w-full h-14 rounded-xl m-2"
           open={openSize}
           setOpen={setOpenSize}
           value={sizeValue}
@@ -215,10 +216,10 @@ const AddClothesModal = () => {
           listMode="SCROLLVIEW"
         />
 
-        <Text className="font-semibold m-1 text-xl">Photo</Text>
+        <Text className="font-semibold m-1">Photo</Text>
         <TouchableWithoutFeedback onPress={pickImage} className="">
           {image===null ?  
-          <View className="w-full aspect-square bg-[#D9D9D9] rounded-xl m-2 p-4 border-box flex items-center justify-center">
+          <View className="w-full aspect-square border-2 border-[#DADADA] bg-transparent rounded-xl m-2 p-4 border-box flex items-center justify-center">
             <Icon type="octicon" name="plus" color="gray"/>
           </View>
           :
@@ -238,15 +239,16 @@ const AddClothesModal = () => {
           </Text>
         </View>
       }
+      
       <View className="flex items-center justify-center pt-5 border-t border-zinc-400">
-        <TouchableOpacity
-          className="bg-[#5b5b5b] w-11/12 p-4 rounded-2xl"
+        <LoadingButton
+          classStyle="w-11/12 p-4 rounded-2xl items-center justify-center"
           onPress={()=>{
             submitForm();
           }}
-        >
-          <Text className="text-white text-center font-semibold">Add</Text>
-        </TouchableOpacity>
+          text="Add"
+          requirements={clothingName && price && conditionValue && size}
+        />
       </View>
       
     </SafeAreaView>
@@ -261,14 +263,16 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   dropDown:{
-    borderWidth: 0,
-    backgroundColor: "#D9D9D9",
+    borderWidth: 2,
+    borderColor: "#DADADA",
+    backgroundColor: "white",
     margin: 8,
     borderRadius: 5,
   },
   drop:{
-    backgroundColor: "#D9D9D9",
-    borderWidth: 0,
+    backgroundColor: "transparent",
+    borderWidth: 2,
+    borderColor: "#DADADA",
     margin: 0,
   },
   textDrop:{

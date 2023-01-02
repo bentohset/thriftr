@@ -48,9 +48,8 @@ const HomeScreen = () => {                          //configuation
         if (!snapshot.exists()){
             navigation.navigate("ConfigureProfile")
         }
-    }),
-    []
-   );     
+    }), []
+    );     
 
     useEffect(() => {
         let unsub;
@@ -70,26 +69,26 @@ const HomeScreen = () => {                          //configuation
             await getDocs(collection(db,'users', user.uid, 'passes'))
             .then(snapshot => {
                 snapshot.docs.forEach(doc => {
-                passes.push(doc.id)
-            })})  //alternative way to get passes, PAPAfam one doesnt work for me.
+                passes.push(doc.id)})
+            })  //alternative way to get passes, PAPAfam one doesnt work for me.
 
             await getDocs(collection(db,'users', user.uid, 'likes'))
             .then(snapshot => {
                 snapshot.docs.forEach(doc => {
-                likes.push(doc.id)
-                })})
+                likes.push(doc.id)})
+            })
 
             await getDocs(collection(db,'users', user.uid, 'cart'))
             .then(snapshot => {
                snapshot.docs.forEach(doc => {
-               cart.push(doc.id)
-                })})
+               cart.push(doc.id)})
+            })
 
             await getDocs(collection(db,'users', user.uid, 'listings'))
             .then(snapshot => {
                snapshot.docs.forEach(doc => {
-               listings.push(doc.id)
-                })})
+               listings.push(doc.id)})
+            })
 
             const passedcards = passes.length > 0 ? passes : ["test"]; //retrieves an arraqy of all the cards that are passed, if no passes then return ["test"]
             const likedcards = likes.length > 0 ? likes : ["test"];
@@ -100,7 +99,7 @@ const HomeScreen = () => {                          //configuation
                 query(
                     collection(db,"clothes"), 
                     where ("clothing", "not-in", [...passedcards, ...likedcards, ...cartcards, ...listedcards])
-                    ),
+                ),
             (snapshot)=>{    //only quaries cards that user has not swiped on 
                 setProfiles(
                     snapshot.docs
@@ -108,7 +107,7 @@ const HomeScreen = () => {                          //configuation
                         id:doc.id,
                         ...doc.data(),
                     }))
-                    )
+                )
             })
         }
 
@@ -146,9 +145,6 @@ const HomeScreen = () => {                          //configuation
             await getDoc(doc(db, "users", cardSwiped.user))
         ).data();
         
-        
-
-
         console.log(`You swiped cart on ${cardSwiped.id}`);
 
         setDoc(doc(db, 'users', user.uid, 'cart', cardSwiped.id ), cardSwiped);
@@ -219,7 +215,7 @@ const HomeScreen = () => {                          //configuation
                                 }
                             }
                         },
-                        top:{
+                        top:{       //TODO: this doesnt show up at the bottom of the card when swiped up, find a way to style it to bottom of card
                             title:"CART",
                             style:{
                                 label:{

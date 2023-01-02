@@ -12,6 +12,7 @@ import useAuth from "../hooks/useAuth";
 import useDocExists from '../hooks/useDocExists';
 import AppContext from '../components/AppContext';
 import DropDownPicker from 'react-native-dropdown-picker';
+import LoadingButton from '../components/LoadingButton';
 
 const ConfigureProfileScreenAge = () => {
 
@@ -62,7 +63,7 @@ const ConfigureProfileScreenAge = () => {
   }
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 bg-white">
       {!!error && 
         <View 
           className="absolute top-72 opacity-90 z-10 p-4 bg-[#D54826FF] rounded-2xl"
@@ -72,7 +73,7 @@ const ConfigureProfileScreenAge = () => {
           </Text>
         </View>
       }
-      <View className="p-4 mt-20">
+      <View className="p-8 mt-20">
         <Text className="font-bold text-5xl leading-loose">
           You're In!
         </Text>
@@ -81,13 +82,13 @@ const ConfigureProfileScreenAge = () => {
         </Text>
       </View>
 
-      <View className="flex-1 items-start p-2 pr-8 m-1 mt-10">
+      <View className="flex-1 items-start p-6 pr-6 m-1 mt-10">
         <Text className="font-semibold m-1">
           Your Age
         </Text>
         <DropDownPicker
           props={{activeOpacity:1}}
-          className="w-full h-12 rounded-xl m-2"
+          className="w-full h-14 rounded-xl my-2 p-4"
           style={styles.drop}
           placeholderStyle={styles.placeholderStyle}
           dropDownContainerStyle={styles.dropDown}
@@ -109,7 +110,7 @@ const ConfigureProfileScreenAge = () => {
         </Text>
         <DropDownPicker
           props={{activeOpacity:1}}
-          className="w-full h-12 rounded-xl m-2"
+          className="w-full h-14 rounded-xl my-2 p-4"
           style={styles.drop}
           placeholderStyle={styles.placeholderStyle}
           dropDownContainerStyle={styles.dropDown}
@@ -127,18 +128,18 @@ const ConfigureProfileScreenAge = () => {
         />
       </View>
 
-      <View className="flex items-center justify-center p-4">
-        <TouchableOpacity
-          className="bg-[#5b5b5b] w-full p-4 rounded-2xl"
+      <View className="flex items-center justify-center px-7 mb-4">
+        <LoadingButton
+          classStyle="w-full p-4 rounded-2xl"
           onPress={()=>{
             configProfileAge();
             if (userAgeValue){
               navigation.navigate('ConfigureProfileScreenTags');
             }
           }}
-        >
-          <Text className="text-white text-center font-semibold">Continue</Text>
-        </TouchableOpacity>
+          requirements={userAgeValue && userGenderValue}
+          text="Continue"
+        />
       </View>
     </SafeAreaView>
   )
@@ -153,14 +154,16 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   dropDown:{
-    borderWidth: 0,
-    backgroundColor: "#D9D9D9",
-    margin: 8,
+    borderWidth: 2,
+    borderColor: "#DADADA",
+    backgroundColor: "white",
+    margin: 0,
     borderRadius: 5,
   },
   drop:{
-    backgroundColor: "#D9D9D9",
-    borderWidth: 0,
+    borderColor: "#DADADA",
+    backgroundColor: "transparent",
+    borderWidth: 2,
     margin: 0,
   },
   textDrop:{

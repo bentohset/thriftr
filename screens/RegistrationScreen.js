@@ -13,7 +13,7 @@ import { doc, setDoc, addDoc, collection } from 'firebase/firestore';
 import useAuth from "../hooks/useAuth";
 import { Icon } from '@rneui/themed';
 import { useFonts } from 'expo-font';
-
+import LoadingButton from "../components/LoadingButton";
 
 
 const Registration = () => {
@@ -51,15 +51,16 @@ const Registration = () => {
     return (
         <SafeAreaView className="flex-1 justify-center items-center">
             <TouchableOpacity className="absolute left-10 top-20 bg-[#D9D9D9] p-3 rounded-xl" onPress={() => navigation.goBack()} >
-                <Icon name="chevron-left" color="#444"/>
+                <Icon name="chevron-left" color="#000"/>
             </TouchableOpacity>
+
             <Text className="absolute font-bold text-5xl left-10 top-40 leading-loose">
                 Create {'\n'}Account
             </Text>
 
             {!!error && 
                 <View 
-                    className="absolute top-72 opacity-90 z-10 p-4 bg-[#D54826FF] rounded-2xl"
+                    className="opacity-90 z-10 p-4 bg-[#D54826FF] rounded-2xl"
                 >
                     <Text className="text-white">
                         {error}
@@ -69,7 +70,7 @@ const Registration = () => {
             
             <Text className="right-1/3 font-semibold">Your Email</Text>
             <TextInput 
-                className="bg-[#D9D9D9] w-5/6 h-12 m-4 p-4 rounded-xl"
+                className="bg-transparent w-5/6 h-14 m-4 p-4 rounded-xl border-2 border-[#DADADA]"
                 placeholder="example@gmail.com"  
                 value={email} 
                 onChangeText={(email) => setEmail(email)} 
@@ -77,9 +78,10 @@ const Registration = () => {
                 autoCorrect={false} 
                 keyboardType="email-address"
             />
+
             <Text className="right-1/3 font-semibold">Password</Text>
             <TextInput 
-                className="bg-[#D9D9D9] w-5/6 h-12 m-4 p-4 rounded-xl"
+                className="bg-transparent w-5/6 h-14 m-4 p-4 rounded-xl border-2 border-[#DADADA]"
                 placeholder="password" 
                 value={password} 
                 onChangeText={(password) => setPassword(password)} 
@@ -87,27 +89,28 @@ const Registration = () => {
                 autoCorrect={false} 
                 secureTextEntry={true}
             />
-            <View className="flex flex-col w-full items-center gap-2 absolute bottom-10">
-                <TouchableOpacity
+
+            <View className="flex flex-col w-full items-center absolute bottom-10">
+                <LoadingButton
                     onPress={()=>{
-                        registration();
-                        
+                        registration(); 
                     }}
-                    className="bg-[#5b5b5b] w-5/6 p-4 rounded-2xl"
-                >
-                    <Text className="text-white text-center font-semibold">Create account</Text>
-                </TouchableOpacity>
+                    text="Create account"
+                    classStyle="w-5/6 p-4 rounded-2xl flex justify-center items-center"
+                    requirements={email && password}
+                />
                 <TouchableOpacity
                     onPress={()=>{
                         signInWithGoogle();
                        
                     }}
-                    className="flex flex-row items-center justify-center bg-transparent w-5/6 p-4 rounded-2xl border border-[#5B5B5B]"
+                    className="mt-2 flex-row items-center justify-center bg-transparent w-5/6 p-4 rounded-2xl border border-[#39C7A5]"
                 >
-                    <Icon className="p-0" size={16} type="antdesign" name="google"/>
-                    <Text className="text-[#5B5B5B] text-center font-semibold">Sign up with Google</Text>
+                    <Icon className="p-0" size={16} type="antdesign" name="google" color="#39C7A5"/>
+                    <Text className="text-[#39C7A5] font-bold">Sign up with Google</Text>
                 </TouchableOpacity>
             </View>
+            
         </SafeAreaView>
         
     )
