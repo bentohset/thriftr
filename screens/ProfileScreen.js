@@ -1,9 +1,10 @@
-import { View, Text, SafeAreaView, Button, TouchableOpacity, ScrollView, FlatList, Image } from 'react-native'
+import { View, Text, SafeAreaView, PixelRatio, Button, TouchableOpacity, ScrollView, FlatList, Image } from 'react-native'
 import React from 'react'
 import useAuth from '../hooks/useAuth';
 import { Icon } from '@rneui/themed';
 import { useNavigation } from "@react-navigation/native";
-
+import { doc, collection, onSnapshot, updateDoc, setDoc, addDoc, query, where, getDocs, getDoc,   } from "firebase/firestore";
+import { auth, firebase, db } from '../firebase';
 
 const products = [
   {
@@ -31,7 +32,7 @@ const products = [
       id:3,
   },
   {
-    clothingName:"Shirt ",
+    clothingName:"Shirt1 ",
     size: "S",
     price: 12,
     condition:"Worn",
@@ -39,7 +40,7 @@ const products = [
     id:4,
   },
   {
-    clothingName:"Shirt ",
+    clothingName:"Shirt2 ",
     size: "S",
     price: 12,
     condition:"Worn",
@@ -47,7 +48,7 @@ const products = [
     id:5,
   },
   {
-    clothingName:"Shirt ",
+    clothingName:"Shirt3 ",
     size: "S",
     price: 12,
     condition:"Worn",
@@ -55,7 +56,7 @@ const products = [
     id:6,
   },
   {
-    clothingName:"Shirt ",
+    clothingName:"Shirt4 ",
     size: "S",
     price: 12,
     condition:"Worn",
@@ -63,7 +64,7 @@ const products = [
     id:7,
   },
   {
-    clothingName:"Shirt ",
+    clothingName:"Shirt5 ",
     size: "S",
     price: 12,
     condition:"Worn",
@@ -71,7 +72,7 @@ const products = [
     id:8,
   },
   {
-    clothingName:"Shirt ",
+    clothingName:"Shirt6 ",
     size: "S",
     price: 12,
     condition:"Worn",
@@ -79,7 +80,7 @@ const products = [
     id:4,
   },
   {
-    clothingName:"Shirt ",
+    clothingName:"Shirt7",
     size: "S",
     price: 12,
     condition:"Worn",
@@ -87,7 +88,7 @@ const products = [
     id:9,
   },
   {
-    clothingName:"Shirt ",
+    clothingName:"Shirt8 ",
     size: "S",
     price: 12,
     condition:"Worn",
@@ -95,7 +96,7 @@ const products = [
     id:10,
   },
   {
-    clothingName:"Shirt ",
+    clothingName:"Shirt9 ",
     size: "S",
     price: 12,
     condition:"Worn",
@@ -103,7 +104,7 @@ const products = [
     id:11,
   },
   {
-    clothingName:"Shirt ",
+    clothingName:"Shirt10 ",
     size: "S",
     price: 12,
     condition:"Worn",
@@ -112,25 +113,28 @@ const products = [
   }
 ];
 
+
 const Item = ({ title, image }) => (
   <TouchableOpacity 
-    onPress={console.log(title)} 
-    className="items-center justify-center border-white border-2 h-28 w-28" >
-    <Image source={{uri: image}} style={{width:100, height:100}}/>
+    onPress={()=>{console.log(title)}} 
+    className="items-center justify-center border-white border-[1px] w-1/3 aspect-square" >
+    <Image source={{uri: image}} style={{width:'100%', height:'100%'}} />
   </TouchableOpacity>
 );
 
 
 
 const ProfileScreen = () => {
-  const {user, logout} = useAuth();
-  console.log(user)
+  const {user} = useAuth();
+  //console.log(user)
   const navigation = useNavigation()
   const renderItem = ({ item }) => (
     <Item 
       title={item.clothingName} 
       image={item.photoURL}/>
   );
+
+  console.log(getDocs(collection(db,'users', user.uid, 'full_name')))
 
   return (
     
@@ -208,6 +212,8 @@ const ProfileScreen = () => {
         
       </View>
 
+      
+
       {/* full name */}
       <View className="flex-row pb-3 items-center mx-7 space-x-2 top-2">
         <Text className="font-bold text-xl">
@@ -263,7 +269,7 @@ const ProfileScreen = () => {
       </View>
 
       {/* all clothes */}
-      <View className="top-6 items-center mx-6 h-[450px]">
+      <View className="top-5 items-center h-[455px]">
       <FlatList
         data={products}
         renderItem={renderItem}
