@@ -31,8 +31,12 @@ const ConfigureProfileScreen = () => {
     setDoc(docRef,{
       full_name: fullName,
       user_name: userName,
-      uid: user.uid,
+      uid: user.uid, 
       email: user.email,
+      likes: 0,
+      followers: 0,
+      following: 0,
+      description: "Write a description about yourself!"
     })
     .then(()=>{navigation.navigate('ConfigureProfileScreenAge')})   //put the navigate within the function so it will only navigate when there is a value
     .catch ((error)=>{setError(error)})

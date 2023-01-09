@@ -6,6 +6,7 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
+import 'firebase/compat/storage';
 
 //import * as admin from "firebase-admin";
 // TODO: Add SDKs for Firebase products that you want to use

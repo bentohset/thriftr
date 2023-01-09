@@ -1,10 +1,13 @@
 import { View, Text, SafeAreaView, PixelRatio, Button, TouchableOpacity, ScrollView, FlatList, Image } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import useAuth from '../hooks/useAuth';
 import { Icon } from '@rneui/themed';
 import { useNavigation } from "@react-navigation/native";
-import { doc, collection, onSnapshot, updateDoc, setDoc, addDoc, query, where, getDocs, getDoc,   } from "firebase/firestore";
+import { doc, collection, onSnapshot, updateDoc, setDoc, addDoc, query, where, getDocs, getDoc, FieldPath,   } from "firebase/firestore";
 import { auth, firebase, db } from '../firebase';
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { Feather } from "@expo/vector-icons";
+
 
 const products = [
   {
@@ -123,18 +126,72 @@ const Item = ({ title, image }) => (
 );
 
 
-
 const ProfileScreen = () => {
   const {user} = useAuth();
-  //console.log(user)
   const navigation = useNavigation()
+
   const renderItem = ({ item }) => (
     <Item 
       title={item.clothingName} 
       image={item.photoURL}/>
   );
 
-  console.log(getDocs(collection(db,'users', user.uid, 'full_name')))
+  const [image, setImage] = useState(null)
+  const getImage = async () => {
+    const storage = getStorage()
+    const test = '/ProfilePics/' + user.uid
+    const reference = ref(storage, test)
+    await getDownloadURL(reference).then((x) => {
+      //console.log(x)
+      setImage(x)
+      //console.log(image)
+    })
+  }
+
+const[FullName, setFullName] = useState('');
+const getFullName = async () =>{
+  const docRef = doc(db, "users", user.uid);
+  const docSnap = await getDoc(docRef);
+  return setFullName(docSnap.data().full_name)
+}
+const[UserName, setUserName] = useState('');
+const getUserName = async () =>{
+  const docRef = doc(db, "users", user.uid);
+  const docSnap = await getDoc(docRef);
+  return setUserName(docSnap.data().user_name)
+}
+const[Likes, setLikes] = useState('');
+const getLikes = async () =>{
+  const docRef = doc(db, "users", user.uid);
+  const docSnap = await getDoc(docRef);
+  return setLikes(docSnap.data().likes)
+}
+const[Followers, setFollowers] = useState('');
+const getFollowers = async () =>{
+  const docRef = doc(db, "users", user.uid);
+  const docSnap = await getDoc(docRef);
+  return setFollowers(docSnap.data().followers)
+}
+const[Following, setFollowing] = useState('');
+const getFollowing = async () =>{
+  const docRef = doc(db, "users", user.uid);
+  const docSnap = await getDoc(docRef);
+  return setFollowing(docSnap.data().following)
+}
+const[Description, setDescription] = useState('');
+const getDescription = async () =>{
+  const docRef = doc(db, "users", user.uid);
+  const docSnap = await getDoc(docRef);
+  return setDescription(docSnap.data().description)
+}
+
+getImage()
+getFullName()
+getUserName()
+getLikes()
+getDescription()
+getFollowers()
+getFollowing()
 
   return (
     
@@ -142,7 +199,7 @@ const ProfileScreen = () => {
       <View className="flex-row pb-3 justify-between mx-7 space-x-2">
         {/* Header with title and search bar */}
         <Text className="font-bold text-3xl">
-        {(user.displayName != undefined)? user.displayName : user.email}
+        {UserName}
         </Text>
 
         {/* Menu button */}
@@ -158,20 +215,19 @@ const ProfileScreen = () => {
 
       <View className="flex-row bottom-0 left-7">
         {/* profile pic */}
-        <TouchableOpacity 
-          onPress={()=> console.log("press profile")}
-          className="items-center justify-center rounded-full w-15 h-15 border-black border-2">
-            <View className="items-center justify-center">
-              <Icon name="person" color="black" size="60"/>
+        <View
+                className="items-center justify-center h-24 w-24 rounded-full bg-black overflow-hidden">
+               <Image className="h-28 w-28 absolute opacity-90"
+                    source = {{uri: image}}
+                />
             </View>
-        </TouchableOpacity>
 
         {/* following */}
         <TouchableOpacity 
           onPress={()=> console.log("press profile")}
           className="items-center justify-center left-12">
             <Text className="font-medium">
-              10
+              {Following}
             </Text>
             <Text className="font-light text-xs">
               following
@@ -183,7 +239,7 @@ const ProfileScreen = () => {
           onPress={()=> console.log("press profile")}
           className="items-center justify-center left-16">
             <Text className="font-medium">
-              10
+              {Followers}
             </Text>
             <Text className="font-light text-xs">
               Followers
@@ -195,7 +251,7 @@ const ProfileScreen = () => {
           onPress={()=> console.log("press profile")}
           className="items-center justify-center left-20 ">
             <Text className="font-medium">
-              10
+              {Likes}
             </Text>
             <Text className="font-light text-xs">
               Likes
@@ -203,10 +259,10 @@ const ProfileScreen = () => {
         </TouchableOpacity>
 
         {/* separator */}
-        <Text className="font-thin text-2xl justify-center left-10 top-3">
+        <Text className="font-thin text-2xl justify-center left-10 top-6">
           |
         </Text>
-        <Text className="font-thin text-2xl justify-center right-8 top-3">
+        <Text className="font-thin text-2xl justify-center right-8 top-6">
           |
         </Text>
         
@@ -217,21 +273,21 @@ const ProfileScreen = () => {
       {/* full name */}
       <View className="flex-row pb-3 items-center mx-7 space-x-2 top-2">
         <Text className="font-bold text-xl">
-          full name
+          {FullName}
         </Text>
       </View>
 
       {/* bio */}
       <View className="flex-row pb-3 items-center mx-7 space-x-2 bottom-1">
         <Text className="font-light text-sm">
-          Hi! This is where i post all my clothes...
+          {Description}
         </Text>
       </View>
 
       <View className="flex flex-row bottom-0 left-6 h-7">
         {/* edit profile button */}
         <TouchableOpacity 
-          onPress={()=> console.log("press profile")}
+          onPress={() => navigation.navigate("EditProfile", {'paramPropKey': 'paramPropValue'})}
           className="basis-9/12 items-center justify-center rounded-md bg-[#39C7A5]">
             <Text className="text-white font-semibold">
               edit profile
@@ -270,12 +326,12 @@ const ProfileScreen = () => {
 
       {/* all clothes */}
       <View className="top-5 items-center h-[455px]">
+    
       <FlatList
         data={products}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         numColumns={3}
-
       />
       </View>
 
