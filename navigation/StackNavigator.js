@@ -20,6 +20,7 @@ import ConfigureProfileScreenAge from '../screens/ConfigureProfileScreenAge';
 import ConfigureProfileScreenTags from '../screens/ConfigureProfileScreenTags';
 import SettingsScreen from '../screens/SettingsScreen'
 
+
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () =>{

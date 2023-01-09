@@ -33,7 +33,7 @@ const LoadingButton = ({ text, onPress, requirements, classStyle }) => {
 
     async function pressFunc(){
         setLoading(true);
-        onPress()           //NOTE: this function cannot be a console.log() coz it doesnt return a value/promise
+        onPress()         //NOTE: this function cannot be a console.log() coz it doesnt return a value/promise
         .then(setLoading(false));
     }
 
