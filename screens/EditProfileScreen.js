@@ -15,28 +15,46 @@ const EditProfile = ({route}) => {
     //console.log(test)
     const navigation = useNavigation()
     const {user} = useAuth();
-    
+    const [data, setData] = useState({})
+    const[FullName, setFullName] = useState('');
+    const[UserName, setUserName] = useState('');
+    const[Description, setDescription] = useState('');
+
     useEffect(() => {
         getFullName()
         getUserName()
         getDescription()
         getImage()
-     }, [route]);
+        // getData()
+        // .then(()=>{
+        //     setFullName(data.full_name);
+        //     setUserName(data.user_name);
+        //     setDescription(data.description);
+        // })
+    }, [route]);
+    
+    // i think can optimize this into one function that pulls the whole doc -ben
+    // then just setData(docsnap.data())
+    // setFullName(data.full_name) etc.
+    const getData = async () => {
+        const docRef = doc(db, "users", user.uid)
+        const docSnap = await getDoc(docRef)
+        return setData(docSnap.data());
+    }
 
-    const[FullName, setFullName] = useState('');
     const getFullName = async () =>{
         const docRef = doc(db, "users", user.uid);
         const docSnap = await getDoc(docRef);
         return setFullName(docSnap.data().full_name)
     }
-    const[UserName, setUserName] = useState('');
+    
     const getUserName = async () =>{
         const docRef = doc(db, "users", user.uid);
         const docSnap = await getDoc(docRef);
         return setUserName(docSnap.data().user_name)
     }
 
-    const[Description, setDescription] = useState('');
+    
     const getDescription = async () =>{
         const docRef = doc(db, "users", user.uid);
         const docSnap = await getDoc(docRef);
@@ -108,12 +126,14 @@ const EditProfile = ({route}) => {
                 console.log(e)
             }
 
+
         }
         
         Alert.alert(
             'Changes saved, refresh profile to see changes!'
         )
         //.then(()=>{navigation.navigate('ProfileScreen')})   //put the navigate within the function so it will only navigate when there is a value
+
       
         
         //navigation.navigate('Tabs')
