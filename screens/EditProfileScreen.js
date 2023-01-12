@@ -10,6 +10,7 @@ import useAuth from '../hooks/useAuth';
 import LoadingButton from '../components/LoadingButton';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
+//testtest
 const EditProfile = ({route}) => {
     //console.log(test)
     const navigation = useNavigation()
@@ -68,14 +69,23 @@ const EditProfile = ({route}) => {
     
 
     const getImage = async () => {
+        
         const storage = getStorage()
-        const test = '/ProfilePics/' + user.uid
-        const reference = ref(storage, test)
-        await getDownloadURL(reference).then((x) => {
-            //console.log(x)
-            setImage(x)
-            //console.log(image)
-        })
+        try {
+            const test = '/ProfilePics/' + user.uid
+            const reference = ref(storage, test)
+        
+            await getDownloadURL(reference).then((x) => {
+                setImage(x)
+            })
+        }catch {
+            console.log("gjgj")
+            const test = '/ProfilePics/' + 'default.png'
+            const reference = ref(storage, test)
+            await getDownloadURL(reference).then((x) => {
+                setImage(x)
+            })
+        }
     }
 
 
@@ -95,10 +105,16 @@ const EditProfile = ({route}) => {
     };
 
     const uploadImage = async () => {
-        console.log('hidasdasdasd')
+        //console.log('hidasdasdasd')
+        const docRef = doc(db,"users", user.uid);
+        updateDoc(docRef,{
+          full_name: FullName,
+          user_name: UserName,
+          description: Description
+        })
 
         if (imageNew != null) {
-            setUploading(true)
+
             const response = await fetch(imageNew.uri)
             const blob = await response.blob()
             const filename = user.uid
@@ -109,22 +125,15 @@ const EditProfile = ({route}) => {
             } catch (error) {
                 console.log(e)
             }
-            setUploading(false)
-            Alert.alert(
-                'Profile picture has been updated!'
-            )
-            setImage(null)
-        }
 
-        const docRef = doc(db,"users", user.uid);
-        setDoc(docRef,{
-          full_name: FullName,
-          user_name: UserName,
-          //email: user.email,
-          description: Description
-        })
-        .then(()=>{navigation.goBack()})   //put the navigate within the function so it will only navigate when there is a value
-        .catch ((error)=>{setError(error)})
+
+        }
+        
+        Alert.alert(
+            'Changes saved, refresh profile to see changes!'
+        )
+        //.then(()=>{navigation.navigate('ProfileScreen')})   //put the navigate within the function so it will only navigate when there is a value
+
       
         
         //navigation.navigate('Tabs')

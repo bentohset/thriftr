@@ -129,6 +129,7 @@ const Item = ({ title, image }) => (
 const ProfileScreen = () => {
   const {user} = useAuth();
   const navigation = useNavigation()
+  console.log(user.uid)
 
   const renderItem = ({ item }) => (
     <Item 
@@ -138,15 +139,24 @@ const ProfileScreen = () => {
 
   const [image, setImage] = useState(null)
   const getImage = async () => {
+        
     const storage = getStorage()
-    const test = '/ProfilePics/' + user.uid
-    const reference = ref(storage, test)
-    await getDownloadURL(reference).then((x) => {
-      //console.log(x)
-      setImage(x)
-      //console.log(image)
-    })
-  }
+    try {
+        const test = '/ProfilePics/' + user.uid
+        const reference = ref(storage, test)
+    
+        await getDownloadURL(reference).then((x) => {
+            setImage(x)
+        })
+    }catch {
+        console.log("gjgj")
+        const test = '/ProfilePics/' + 'default.png'
+        const reference = ref(storage, test)
+        await getDownloadURL(reference).then((x) => {
+            setImage(x)
+        })
+    }
+}
 
 const[FullName, setFullName] = useState('');
 const getFullName = async () =>{
