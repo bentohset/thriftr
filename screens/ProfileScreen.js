@@ -143,22 +143,7 @@ const ProfileScreen = () => {
 const header = () =>{
   return(
     <View className="flex-1 bg-gray-100">
-      <View className="flex-row pb-3 justify-between mx-7 space-x-2">
-        {/* Header with title and search bar */}
-        <Text className="font-bold text-3xl">
-        {UserName}
-        </Text>
 
-        {/* Menu button */}
-        <TouchableOpacity 
-          onPress={() => navigation.navigate('SettingsScreen')}
-          className="items-right justify-center rounded-full w-10 h-15">
-            <View className="items-center justify-center">
-              <Icon name="menu" color="black" size="30"/>
-            </View>
-        </TouchableOpacity>
-
-      </View>
 
       <View className="flex-row bottom-0 left-7">
         {/* profile pic */}
@@ -279,11 +264,26 @@ const header = () =>{
   return (
     
     <SafeAreaView className="flex-grow">
+      <View className="flex-row pb-3 justify-between mx-7 space-x-2">
+        {/* Header with title and search bar */}
+        <Text className="font-bold text-3xl">
+        {UserName}
+        </Text>
 
+        {/* Menu button */}
+        <TouchableOpacity 
+          onPress={() => navigation.navigate('SettingsScreen')}
+          className="items-right justify-center rounded-full w-10 h-15">
+            <View className="items-center justify-center">
+              <Icon name="menu" color="black" size="30"/>
+            </View>
+        </TouchableOpacity>
+
+      </View>
       
 
       {/* all clothes */}
-    
+
       <FlatList
         data={products}
         renderItem={renderItem}
