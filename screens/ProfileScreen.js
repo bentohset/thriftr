@@ -263,7 +263,7 @@ const header = () =>{
 
   return (
     
-    <SafeAreaView className="flex-grow">
+    <SafeAreaView className="flex-grow bg-gray-100">
       <View className="flex-row pb-3 justify-between mx-7 space-x-2">
         {/* Header with title and search bar */}
         <Text className="font-bold text-3xl">
