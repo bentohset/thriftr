@@ -32,6 +32,7 @@ const ProfileScreen = () => {
   const[Followers, setFollowers] = useState('');
   const[Following, setFollowing] = useState('');
   const[Description, setDescription] = useState('');
+  const [listings, setListings] = useState([]);
 
   const onRefresh = () => {
     setRefreshing(true)
@@ -46,7 +47,7 @@ const ProfileScreen = () => {
 
   const renderItem = ({ item }) => (
     <Item 
-      title={item.clothingName} 
+      title={item.clothing} 
       image={item.photoURL}/>
   );
 
@@ -56,12 +57,29 @@ const ProfileScreen = () => {
       setUserName(doc.data().user_name);
       setDescription(doc.data().description);
     })
+    onSnapshot(doc(db,"users",user.uid,"listings"),snapshot=>{
+      setListings(
+        snapshot.docs.map(doc=>({
+          id:doc.id,
+          ...doc.data(),
+        }))
+      )
+    })
     getImage();
   }
 
   useEffect(() => {
     let unsub;
+    let unsub2;
     const fetchData = async () => {
+      // onSnapshot(doc(db,"users",user.uid,"listings"),snapshot=>{
+      //   setListings(
+      //     snapshot.docs.map(doc=>({
+      //       id:doc.id,
+      //       ...doc.data(),
+      //     }))
+      //   )
+      // })
       getImage()
       unsub = onSnapshot(doc(db,"users",user.uid),(doc)=>{
         setFullName(doc.data().full_name);
@@ -71,9 +89,20 @@ const ProfileScreen = () => {
         setFollowers(doc.data().followers);
         setFollowing(doc.data().following);
       })
+      unsub2 = onSnapshot(collection(db,"users",user.uid,"listings"),(snapshot)=>{
+        setListings(
+          snapshot.docs.map(doc=>({
+            id:doc.id,
+            ...doc.data(),
+          }))
+        )
+      })
     }
     fetchData();
-    return unsub;
+    return ()=>{
+      unsub;
+      unsub2;
+    }
   },[])
 
   const getImage = async () => {
@@ -285,7 +314,7 @@ const header = () =>{
       {/* all clothes */}
 
       <FlatList
-        data={products}
+        data={listings}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         numColumns={3}
