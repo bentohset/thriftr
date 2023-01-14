@@ -88,7 +88,7 @@ const ProfileScreen = () => {
         )
       })
     }
-    console.log(listings)
+    console.log("listings", listings)
     fetchData();
     return ()=>{
       unsub;
@@ -101,16 +101,17 @@ const ProfileScreen = () => {
     try {
         const test = '/ProfilePics/' + user.uid
         const reference = ref(storage, test)
-    
+      
         await getDownloadURL(reference).then((x) => {
+          console.log("success profile pic", x);
             setImage(x)
         })
     }catch {
-        console.log("gjgj")
+        console.log("catch")
         const test = '/ProfilePics/' + 'default.png'
         const reference = ref(storage, test)
         await getDownloadURL(reference).then((x) => {
-            setImage(x)
+            setImage("catched profile pic error",x)
         })
     }
 }
@@ -170,15 +171,15 @@ const renderItem = ({ item }) => (
 
 const RenderEmpty = () => {
   return(
-  <View className="flex-1 min-h-screen items-center mt-20">
-    <Text>Add listings!</Text>
+  <View className="flex-1 items-center mt-20">
+    <Text className="text-lg font-bold">You have nothing, add some listings!</Text>
   </View>
 )
 }
 
 const header = () =>{
   return(
-    <View className="flex-1 bg-gray-100 drop-shadow-md">
+    <View className="flex-1 bg-gray-100 border-b border-zinc-200">
 
 
       <View className="flex-row bottom-0 left-7">
