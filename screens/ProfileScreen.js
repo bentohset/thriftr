@@ -9,13 +9,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { Feather } from "@expo/vector-icons";
 
 
-const Item = ({ title, image }) => (
-  <TouchableOpacity 
-    onPress={()=>{console.log(title)}} 
-    className="items-center justify-center border-white border-[1px] w-1/3 aspect-square" >
-    <Image source={{uri: image}} style={{width:'100%', height:'100%'}} />
-  </TouchableOpacity>
-);
+
 
 
 const ProfileScreen = () => {
@@ -45,11 +39,7 @@ const ProfileScreen = () => {
     console.log("refreshed")
   }
 
-  const renderItem = ({ item }) => (
-    <Item 
-      title={item.clothing} 
-      image={item.photoURL}/>
-  );
+
 
   const fetchData = () =>{
     onSnapshot(doc(db,"users",user.uid),(doc)=>{
@@ -57,7 +47,7 @@ const ProfileScreen = () => {
       setUserName(doc.data().user_name);
       setDescription(doc.data().description);
     })
-    onSnapshot(doc(db,"users",user.uid,"listings"),snapshot=>{
+    onSnapshot(collection(db,"users",user.uid,"listings"),snapshot=>{
       setListings(
         snapshot.docs.map(doc=>({
           id:doc.id,
@@ -98,6 +88,7 @@ const ProfileScreen = () => {
         )
       })
     }
+    console.log(listings)
     fetchData();
     return ()=>{
       unsub;
@@ -169,9 +160,25 @@ const ProfileScreen = () => {
 // getFollowers()
 // getFollowing()
 
+const renderItem = ({ item }) => (
+  <TouchableOpacity 
+    onPress={()=>{console.log(item.clothing)}} 
+    className="items-center justify-center border-white border-[1px] w-1/3 aspect-square" >
+    <Image source={{uri: item.photoURL}} style={{width:'100%', height:'100%'}} />
+  </TouchableOpacity>
+);
+
+const RenderEmpty = () => {
+  return(
+  <View className="flex-1 min-h-screen items-center mt-20">
+    <Text>Add listings!</Text>
+  </View>
+)
+}
+
 const header = () =>{
   return(
-    <View className="flex-1 bg-gray-100">
+    <View className="flex-1 bg-gray-100 drop-shadow-md">
 
 
       <View className="flex-row bottom-0 left-7">
@@ -312,16 +319,19 @@ const header = () =>{
       
 
       {/* all clothes */}
-
-      <FlatList
-        data={listings}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        numColumns={3}
-        ListHeaderComponent={header}
-        stickyHeaderIndices={[0]}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-      />
+      <View>
+        <FlatList
+          className="flex h-full"
+          data={listings}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+          numColumns={3}
+          ListHeaderComponent={header}
+          ListEmptyComponent={<RenderEmpty/>}
+          stickyHeaderIndices={[0]}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        />
+      </View>
     </SafeAreaView>
   )
 }
